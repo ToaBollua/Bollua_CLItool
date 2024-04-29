@@ -94,7 +94,7 @@ class clitool:
             print("===== sqlmap is ready to use. =====")
             run_opt = input("Do you want to run sqlmap?\n(Y/N)\n>> ")
             if run_opt.lower() == "y":
-                #self.run_sqlmap(menu)
+                self.run_sqlmap(menu)
                 print("This is still a work in progress!")
                 self.return_to_menu(menu)
             else:
@@ -181,7 +181,7 @@ class clitool:
 # HERE WE RUN THE TOOLS
     
     def run_sqlmap(self):
-        # Prompt the user for the parameters they want to use with sqlmap
+        # PROMPT THE USER FOR SQLMAP OPTIONS AND EXECUTE THEM
         target = input("Enter the target URL (e.g 'http[s]://target[:port]/[path/]'): ")
         technique = input("Enter the technique to use (e.g. -b for boolean-based blind, -t for time-based, etc.): ")
         dbms = input("Enter the DBMS (e.g. MySQL, PostgreSQL, etc.): ")
@@ -194,7 +194,7 @@ class clitool:
             print("Invalid input. Please enter a number for the level and risk.\n")
             return
 
-        # Change to the sqlmap directory and run sqlmap with the specified parameters
+        # CHANGE TO THE SQLMAP DIRECTORY
         os.chdir(os.path.join(self.base_path, "sqlmap"))
         os.system(f"py sqlmap.py -u {target} {technique} -d {dbms} -l {level} -risk {risk}")
         input("Press any key to continue...")
@@ -224,6 +224,8 @@ class clitool:
             os.system(command)
             input("Press any key to continue...\n")
     
+    # IMPORTANT! EMAILALL IS SHOWING ERRORS WHILE RUNNING BUT IT SOMEHOW WORKS...
+    # NEED TO FIX THIS LATER... maybe.
     def run_EmailAll(self):
         EmailAll_path = os.path.join(self.base_path, "EmailAll")
         if not os.path.exists(EmailAll_path):

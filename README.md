@@ -8,7 +8,9 @@ CLItool is inspired by other projects like Babymux, but it runs the programs it 
 
 CLItool is currently made for PowerShell, but I may create a bash version in the future.
 
-I am open to any pull requests, issues, or feedback you may have about this project. Please be respectful and constructive in your feedback.
+I am open to any push requests, issues, or feedback you may have about this project. Please be respectful and constructive in your feedback.
+
+If you have any tool suggestions. I'd be glad to read them out!!
 
 # Installation
 To install CLItool, clone this repository:
