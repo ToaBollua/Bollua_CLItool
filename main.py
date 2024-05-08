@@ -254,29 +254,28 @@ class clitool:
             
 
 # HERE WE DISPLAY THE MENU AND THE TOOLS    
-    def menu(self):
-        print("These are the available  tools in this CLI:\n")
+    def pentest_menu(self):
+        print("These are the available tools in this CLI:\n")
         time.sleep(1)
         print("01) sqlmap - SQL injection detection and exploitation tool")
         print("02) pagodo - Google-based web vulnerability scanner")
         print("03) EmailAll - Advanced email collection tool")
-        print("00) Exit CLItool.")
+        print("00) Return to menu.")
     
         tool_opt = input("Select a tool to install or run>> ")
     
         if tool_opt == "1" or tool_opt == "01" or tool_opt == "sqlmap":
-            self.install_sqlmap(self.menu)
+            self.install_sqlmap(self.pentest_menu)
         
         elif tool_opt == "2" or tool_opt == "02" or tool_opt  == "pagodo":
-            self.install_pagodo(self.menu)
+            self.install_pagodo(self.pentest_menu)
         
         elif tool_opt == "3" or tool_opt == "03" or tool_opt == "EmailAll" or tool_opt == "emailall":
-            self.install_EmailAll(self.menu)
+            self.install_EmailAll(self.pentest_menu)
         
 
-        if tool_opt == "00" or tool_opt == "0" or tool_opt == "exit":
-            print("Exiting program...")
-            sys.exit()
+        if tool_opt == "00" or tool_opt == "0" or tool_opt == "back":
+            self.return_to_menu(self.menu)
             
         else:
             print("\nPlease select a valid input, returning now.\n")
@@ -285,6 +284,29 @@ class clitool:
             banner.test()
             self.menu()
             
+    def menu(self):
+        print("These are the following functions:\n")
+        time.sleep(1)
+        print("01) Pentesting menu.")
+        print("00) Exit CLItool")
+        
+        menu_opt = input("Select a menu to continue>> ")
+        
+        if menu_opt == "1" or menu_opt == "01" or menu_opt == "pentesting":
+            os.system("cls")
+            banner.test()
+            self.pentest_menu()
+        
+        elif menu_opt == "0" or menu_opt == "00" or menu_opt == "exit":
+            sys.exit()
+        
+        else:
+            print("\nPlease select a valid input, returning now.\n")
+            time.sleep(3)
+            os.system("cls")
+            banner.test()
+            self.menu()
+
 
 banner.test()
 clitool = clitool()
