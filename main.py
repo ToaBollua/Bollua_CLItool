@@ -38,11 +38,13 @@ class clitool:
         self.sqlmap_path = os.path.join(self.base_path, "sqlmap")
         self.pagodo_path = os.path.join(self.base_path, "pagodo")
         self.EmailAll_path = os.path.join(self.base_path, "EmailAll")
+        self.calculator_path = os.path.join(self.base_path, "calculator")
         
         # TOOLS GITHUB DOWNLOAD URL SO WE CAN CALL THEM LATER
         self.sqlmap_url = 'https://github.com/sqlmapproject/sqlmap.git'
         self.pagodo_url = 'https://github.com/opsdisk/pagodo.git'
         self.EmailAll_url = 'https://github.com/Taonn/EmailAll.git'
+        self.calculator_url = 'https://github.com/ToaBollua/Calculadora.git'
         
         
         
@@ -95,8 +97,6 @@ class clitool:
             run_opt = input("Do you want to run sqlmap?\n(Y/N)\n>> ")
             if run_opt.lower() == "y":
                 self.run_sqlmap(menu)
-                print("This is still a work in progress!")
-                self.return_to_menu(menu)
             else:
                 self.return_to_menu(menu)
             
@@ -176,6 +176,28 @@ class clitool:
             else:
                 self.return_to_menu(menu)
     
+    def install_calculator(self, menu):
+        calculator_path = os.path.join(self.base_path, "calculator")
+        if os.path.exists(calculator_path):
+            print("===== calculator is already installed =====")
+            print("===== calculator is ready to use =====")
+            run_opt = input("Do you want to run calculator?\n(Y/N)\n>> ")
+            if run_opt.lower() == "y":
+                self.run_calculator()
+            else:
+                self.return_to_menu(menu)
+                
+        else:
+            print("===== calculator is not installed =====")
+            print("===== Installing calculator... =====")
+            os.system(f"git clone -b master {self.calculator_url} {calculator_path}")
+            print("===== calculator succesfully installed =====")
+            print("===== calculator is ready to use =====")
+            run_opt = input("Do you want to run calculator?\n(Y/N)\n>> ")
+            if run_opt.lower() == "y":
+                self.run_calculator()
+            else:
+                self.return_to_menu(menu)
 
 
 # HERE WE RUN THE TOOLS
@@ -250,10 +272,23 @@ class clitool:
             command = f"py emailall.py --domain {domain} run"
             os.system(command)
             input("Press any key to continue...\n")
+    
+    def run_calculator(self):
+        calculator_path = os.path.join(self.base_path, "calculator")
+        if not os.path.exists(calculator_path):
+            print("===== calculator is not installed. Please install it first... =====")
+            self.install_calculator(self.calculation_menu)
+        else:
+            os.chdir(calculator_path)
+            os.system("cls")
+            banner.test()
+            os.system(f"py Calculadora4.8.py")
+            input("Press any key to continue...")
+            self.return_to_menu(self.calculation_menu)
 
             
 
-# HERE WE DISPLAY THE MENU AND THE TOOLS    
+# HERE WE DISPLAY THE PENTESTING MENU AND THE TOOLS    
     def pentest_menu(self):
         print("These are the available tools in this CLI:\n")
         time.sleep(1)
@@ -283,11 +318,30 @@ class clitool:
             os.system("cls")
             banner.test()
             self.menu()
+    
+    def calculation_menu(self):
+        print("These are the available tools:\n")
+        time.sleep(1)
+        print("01) calculator - Simple CLI calculator")
+        print("00) Return to menu")
+        
+        tool_opt = input("Select a tool to install or run>> ")
+        
+        if tool_opt == "01" or "1" or "calculator":
+            self.install_calculator(self.calculation_menu)
+        
+        elif tool_opt == "00" or "0" or "back":
+            self.return_to_menu()
+        
+# HERE WE DISPLAY THE CALCULATION MENU FOR SIMPLE CALCULATION ISSUES
+
+
             
     def menu(self):
         print("These are the following functions:\n")
         time.sleep(1)
         print("01) Pentesting menu.")
+        print("02) Calculation menu.")
         print("00) Exit CLItool")
         
         menu_opt = input("Select a menu to continue>> ")
@@ -296,6 +350,11 @@ class clitool:
             os.system("cls")
             banner.test()
             self.pentest_menu()
+            
+        elif menu_opt == "2" or menu_opt == "02" or menu_opt == "calculation":
+            os.system('cls')
+            banner.test()
+            self.calculation_menu()
         
         elif menu_opt == "0" or menu_opt == "00" or menu_opt == "exit":
             sys.exit()
@@ -308,6 +367,7 @@ class clitool:
             self.menu()
 
 
+os.system("cls")
 banner.test()
 clitool = clitool()
 clitool.menu()
