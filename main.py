@@ -47,9 +47,9 @@ class clitool:
         self.calculator_url = 'https://github.com/ToaBollua/tools4toolkit.git'
         self.IMC_url = 'https://github.com/ToaBollua/tools4toolkit.git'
         self.watch_url = 'https://github.com/ToaBollua/tools4toolkit.git'
+
         
-        
-        
+       
         #CHECK IF REQUIREMENTS ARE MET
         if shutil.which('git') is None:
             self.git_opt = input("git is not installed. Do you want to install git?\n(Y/N)>> ")
@@ -246,6 +246,7 @@ class clitool:
                 self.run_watch()
             else:
                 self.return_to_menu(menu)
+    
 
 
 # HERE WE RUN THE TOOLS
@@ -358,7 +359,7 @@ class clitool:
             banner.test()
             os.system(f"py script.py")
             input("Press any key to continue...")
-            self.return_to_menu(self.calculation_menu)
+            self.return_to_menu(self.calculation_menu)       
 
 
     def delete_tools(self):
