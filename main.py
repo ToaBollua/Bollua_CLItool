@@ -44,7 +44,9 @@ class clitool:
         self.sqlmap_url = 'https://github.com/sqlmapproject/sqlmap.git'
         self.pagodo_url = 'https://github.com/opsdisk/pagodo.git'
         self.EmailAll_url = 'https://github.com/Taonn/EmailAll.git'
-        self.calculator_url = 'https://github.com/ToaBollua/Calculadora.git'
+        self.calculator_url = 'https://github.com/ToaBollua/tools4toolkit.git'
+        self.IMC_url = 'https://github.com/ToaBollua/tools4toolkit.git'
+        self.watch_url = 'https://github.com/ToaBollua/tools4toolkit.git'
         
         
         
@@ -190,12 +192,58 @@ class clitool:
         else:
             print("===== calculator is not installed =====")
             print("===== Installing calculator... =====")
-            os.system(f"git clone -b master {self.calculator_url} {calculator_path}")
+            os.system(f"git clone -b calculator {self.calculator_url} {calculator_path}")
             print("===== calculator succesfully installed =====")
             print("===== calculator is ready to use =====")
             run_opt = input("Do you want to run calculator?\n(Y/N)\n>> ")
             if run_opt.lower() == "y":
                 self.run_calculator()
+            else:
+                self.return_to_menu(menu)
+    
+    def install_IMC(self, menu):
+        IMC_path = os.path.join(self.base_path, "IMC")
+        if os.path.exists(IMC_path):
+            print("===== IMC is already installed =====")
+            print("===== IMC is ready to use =====")
+            run_opt = input("Do you want to run IMC?\n(Y/N)\n>> ")
+            if run_opt.lower() == "y":
+                self.run_IMC()
+            else:
+                self.return_to_menu(menu)
+        
+        else:
+            print("===== IMC is not installed =====")
+            print("===== Installing IMC... =====")
+            os.system(f"git clone -b IMC {self.IMC_url} {IMC_path}")
+            print("===== IMC succesfully installed =====")
+            print("===== IMC is ready to use =====")
+            run_opt = input("Do you want to run IMC?\n(Y/N)\n>> ")
+            if run_opt.lower() == "y":
+                self.run_IMC()
+            else:
+                self.return_to_menu(menu)
+                
+    def install_watch(self, menu):
+        watch_path = os.path.join(self.base_path, "watch")
+        if os.path.exists(watch_path):
+            print("===== watch is already installed =====")
+            print("===== watch is ready to use =====")
+            run_opt = input("Do you want to run watch?\n(Y/N)\n>> ")
+            if run_opt.lower() == "y":
+                self.run_watch()
+            else:
+                self.return_to_menu(menu)
+                
+        else:
+            print("===== watch is not installed =====")
+            print("===== installing watch... =====")
+            os.system(f"git clone -b time {self.watch_url} {watch_path}")
+            print("===== watch succesfully installed =====")
+            print("===== watch is ready to use =====")
+            run_opt = input("Do you want to run watch?\n(Y/N)\n>> ")
+            if run_opt.lower() == "y":
+                self.run_watch()
             else:
                 self.return_to_menu(menu)
 
@@ -282,7 +330,33 @@ class clitool:
             os.chdir(calculator_path)
             os.system("cls")
             banner.test()
-            os.system(f"py Calculadora4.8.py")
+            os.system(f"py script.py")
+            input("Press any key to continue...")
+            self.return_to_menu(self.calculation_menu)
+    
+    def run_IMC(self):
+        IMC_path = os.path.join(self.base_path, "IMC")
+        if not os.path.exists(IMC_path):
+            print("===== IMC is not installed. Please install it first... =====")
+            self.install_IMC(self.calculation_menu)
+        else:
+            os.chdir(IMC_path)
+            os.system("cls")
+            banner.test()
+            os.system(f"py script.py")
+            input("Press any key to continue...")
+            self.return_to_menu(self.calculation_menu)
+    
+    def run_watch(self):
+        watch_path = os.path.join(self.base_path, "watch")
+        if not os.path.exists(watch_path):
+            print("===== watch is not installed. Please install it first... =====")
+            self.install_watch(self.calculation_menu)
+        else:
+            os.chdir(watch_path)
+            os.system("cls")
+            banner.test()
+            os.system(f"py script.py")
             input("Press any key to continue...")
             self.return_to_menu(self.calculation_menu)
 
@@ -334,15 +408,28 @@ class clitool:
         print("These are the available tools:\n")
         time.sleep(1)
         print("01) calculator - Simple CLI calculator")
+        print("02) IMC - IMC calculator")
+        print("03) watch - It gives time...")
         print("00) Return to menu")
         
         tool_opt = input("Select a tool to install or run>> ")
         
-        if tool_opt == "01" or "1" or "calculator":
+        if tool_opt == "01" or tool_opt == "1" or tool_opt.lower() == "calculator":
             self.install_calculator(self.calculation_menu)
+            
+        elif tool_opt == "02" or tool_opt == "2" or tool_opt.lower() == "imc":
+            self.install_IMC(self.calculation_menu)
+            
+        elif tool_opt == "03" or tool_opt == "3" or tool_opt.lower() == "watch":
+            self.install_watch(self.calculation_menu)
         
         elif tool_opt == "00" or "0" or "back":
+            self.return_to_menu(self.calculation_menu)
+        
+        else:
+            print("\nPlease select a valid input, returning now.\n")
             self.return_to_menu()
+            self.calculation_menu()
         
 # HERE WE DISPLAY THE SETTINGS MENU
     def settings_menu(self):
