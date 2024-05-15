@@ -286,6 +286,19 @@ class clitool:
             input("Press any key to continue...")
             self.return_to_menu(self.calculation_menu)
 
+
+    def delete_tools(self):
+        print("===== Deleting tools... =====")
+        for dir in ["calculator", "EmailAll", "pagodo", "sqlmap", "__pycache__"]:
+            dir_path = os.path.join(self.base_path, dir)
+            if os.path.exists(dir_path):
+                try:
+                    subprocess.run(["rmdir", "/s", "/q", dir_path], shell=True)
+                    print(f"Deleted {dir_path}")
+                except OSError as e:
+                    print(f"Error deleting {dir_path}: {e}")
+        print("===== Tools deleted. =====")
+        
             
 
 # HERE WE DISPLAY THE PENTESTING MENU AND THE TOOLS    
@@ -318,7 +331,8 @@ class clitool:
             os.system("cls")
             banner.test()
             self.menu()
-    
+
+# HERE WE DISPLAY THE MULTIPLE CALCULATION FUNCTIONS
     def calculation_menu(self):
         print("These are the available tools:\n")
         time.sleep(1)
@@ -333,6 +347,35 @@ class clitool:
         elif tool_opt == "00" or "0" or "back":
             self.return_to_menu()
         
+# HERE WE DISPLAY THE SETTINGS MENU
+    def settings_menu(self):
+        print("These are the available settings:\n")
+        time.sleep(1)
+        print("01) Change the default directory (WIP)")
+        print("02) Delete tools (For update purposes) (WIP)")
+        print("00) Return to menu.")
+        
+        tool_opt = input("Please select an option\n>> ")
+        
+        if tool_opt == "01" or tool_opt == "1":
+            print("This is a work in progress!")
+            self.return_to_menu(self.menu)
+        
+        elif tool_opt == "02" or tool_opt == "2":
+            #self.delete_tools()
+            print("This is a work in progress!")
+            self.return_to_menu(self.menu)
+        
+        elif tool_opt == "00" or tool_opt == "0":
+            self.return_to_menu(self.menu)
+        
+        else:
+            print("\nPlease select a valid input, returning now.\n")
+            time.sleep(3)
+            os.system("cls")
+            banner.test()
+            self.settings_menu()
+            
 # HERE WE DISPLAY THE CALCULATION MENU FOR SIMPLE CALCULATION ISSUES
 
 
@@ -342,6 +385,7 @@ class clitool:
         time.sleep(1)
         print("01) Pentesting menu.")
         print("02) Calculation menu.")
+        print("99) Settings.")
         print("00) Exit CLItool")
         
         menu_opt = input("Select a menu to continue>> ")
@@ -355,6 +399,11 @@ class clitool:
             os.system('cls')
             banner.test()
             self.calculation_menu()
+            
+        elif menu_opt == "99" or menu_opt == "settings":
+            os.system("cls")
+            banner.test()
+            self.settings_menu()
         
         elif menu_opt == "0" or menu_opt == "00" or menu_opt == "exit":
             sys.exit()
