@@ -376,8 +376,7 @@ class clitool:
             banner.test()
             self.settings_menu()
             
-# HERE WE DISPLAY THE CALCULATION MENU FOR SIMPLE CALCULATION ISSUES
-
+# THIS IS THE MAIN MENU
 
             
     def menu(self):
