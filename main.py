@@ -327,10 +327,7 @@ class clitool:
             
         else:
             print("\nPlease select a valid input, returning now.\n")
-            time.sleep(3)
-            os.system("cls")
-            banner.test()
-            self.menu()
+            self.return_to_menu(self.menu)
 
 # HERE WE DISPLAY THE MULTIPLE CALCULATION FUNCTIONS
     def calculation_menu(self):
@@ -371,9 +368,7 @@ class clitool:
         
         else:
             print("\nPlease select a valid input, returning now.\n")
-            time.sleep(3)
-            os.system("cls")
-            banner.test()
+            return_to_menu(self.menu)
             self.settings_menu()
             
 # THIS IS THE MAIN MENU
@@ -409,9 +404,7 @@ class clitool:
         
         else:
             print("\nPlease select a valid input, returning now.\n")
-            time.sleep(3)
-            os.system("cls")
-            banner.test()
+            self.return_to_menu(self.menu)
             self.menu()
 
 
