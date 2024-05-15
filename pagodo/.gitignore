@@ -1,5 +1,0 @@
-*.log
-pagodo_results*.json
-pagodo_results*.txt
-__pycache__/
-.venv/
