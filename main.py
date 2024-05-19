@@ -80,7 +80,7 @@ class clitool:
     
     def check_python_version(self):
         if sys.version_info.major < 3 or (sys.version_info.major == 3 and sys.version_info.minor < 11):
-            print(f"WARNING: This CLItool is designed for Python 3.11 or higher. You are currently using Python {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+            print(f"WARNING: This CLItool is designed for Python 3.11 or higher. You are currently using Python {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}")
             
     # ADDS REQUIREMENTS TO THE SYSTEM'S PATH ENVIROMENT VARIABLE
         if 'git' not in os.environ['PATH']:
