@@ -48,7 +48,8 @@ class clitool:
         self.IMC_url = 'https://github.com/ToaBollua/tools4toolkit.git'
         self.watch_url = 'https://github.com/ToaBollua/tools4toolkit.git'
 
-        
+        self.python_command = self.get_python_command()
+        self.check_python_version() 
        
         #CHECK IF REQUIREMENTS ARE MET
         if shutil.which('git') is None:
@@ -66,6 +67,20 @@ class clitool:
                 os.system("cls")
                 banner.test()
                 return
+            
+    def get_python_command(self):
+        if shutil.which('py') is not None:
+            return "py"
+        elif shutil.which('python') is not None:
+            return "python"
+        elif shutil.which("python3") is not None:
+            return "python3"
+        else:
+            print("Python is not installed. Please install python and try again.")
+    
+    def check_python_version(self):
+        if sys.version_info.major < 3 or (sys.version_info.major == 3 and sys.version_info.minor < 11):
+            print("WARNING: This CLItool is designed for Python 3.11 or higher. You are currently using Python {}.{}.{}".format(sys.version_info.major, sys.version_info.minor, sys.version_info.micro))
             
     # ADDS REQUIREMENTS TO THE SYSTEM'S PATH ENVIROMENT VARIABLE
         if 'git' not in os.environ['PATH']:
@@ -113,8 +128,8 @@ class clitool:
             print("===== Installing holehe... =====")
             os.system(f"git clone {self.holehe_url} -b master --single-branch --depth 1 {holehe_path}")
             os.chdir(holehe_path)
-            os.system("py -m pip uninstall holehe --yes")
-            os.system(f"py -m pip install -e {holehe_path}")
+            os.system(f"{self.python_command} -m pip uninstall holehe --yes")
+            os.system(f"{self.python_command} -m pip install -e {holehe_path}")
             os.chdir(self.base_path)
             print("===== holehe succesfully installed. =====")
             print("===== holehe is ready to use. =====")
@@ -141,7 +156,7 @@ class clitool:
             os.system(f"git clone {self.pagodo_url} -b master --single-branch --depth 1 {pagodo_path}")
             print("===== Installing pagodo requirements... =====")
             os.chdir(pagodo_path)
-            os.system("py -m pip install -r requirements.txt")
+            os.system(f"{self.python_command} -m pip install -r requirements.txt")
             os.chdir(self.base_path)
             print("===== pagodo requirements successfully installed. =====")
             print("===== pagodo succesfully installed. =====")
@@ -169,7 +184,7 @@ class clitool:
             os.system(f"git clone {self.EmailAll_url} {EmailAll_path}")
             print("===== Installing EmailAll requirements... =====")
             os.chdir(EmailAll_path)
-            os.system("py -m pip install -r requirements.txt")
+            os.system(f"{self.python_command} -m pip install -r requirements.txt")
             print("===== EmailAll succesfully installed. =====")
             print("===== EmailAll is ready to use. =====")
             run_opt = input("Do you want to run EmailAll?\n(Y/N)\n>> ")
@@ -251,7 +266,7 @@ class clitool:
 
 # HERE WE RUN THE TOOLS
     
-    def run_sqlmap(self):
+    def run_sqlmap(self, menu=None):
         # PROMPT THE USER FOR SQLMAP OPTIONS AND EXECUTE THEM
         target = input("Enter the target URL (e.g 'http[s]://target[:port]/[path/]'): ")
         technique = input("Enter the technique to use (e.g. -b for boolean-based blind, -t for time-based, etc.): ")
@@ -267,7 +282,7 @@ class clitool:
 
         # CHANGE TO THE SQLMAP DIRECTORY
         os.chdir(os.path.join(self.base_path, "sqlmap"))
-        os.system(f"py sqlmap.py -u {target} {technique} -d {dbms} -l {level} -risk {risk}")
+        os.system(f"{self.python_command} sqlmap.py -u {target} {technique} -d {dbms} -l {level} -risk {risk}")
         input("Press any key to continue...")
         self.return_to_menu(menu)
 
@@ -286,7 +301,7 @@ class clitool:
             output_file = input("Enter the path to save the output JSON file (optional): ")
             urls_file = input("Enter the path to save the URLs to a text file (optional): ")
             
-            command = f"py pagodo.py -d {domain} -g {dorks_file} -m {max_results}"
+            command = f"{self.python_command} pagodo.py -d {domain} -g {dorks_file} -m {max_results}"
             if output_file:
                 command += f" -o {output_file}"
             if urls_file:
@@ -318,7 +333,7 @@ class clitool:
                 os.system("py -m pip install fake_useragent")
                 os.system("py -m pip install lxml")
             domain = input("Enter the domain to search (e.g. example.com): ")
-            command = f"py emailall.py --domain {domain} run"
+            command = f"{self.python_command} emailall.py --domain {domain} run"
             os.system(command)
             input("Press any key to continue...\n")
     
@@ -331,7 +346,7 @@ class clitool:
             os.chdir(calculator_path)
             os.system("cls")
             banner.test()
-            os.system(f"py script.py")
+            os.system(f"{self.python_command} script.py")
             input("Press any key to continue...")
             self.return_to_menu(self.calculation_menu)
     
@@ -344,7 +359,7 @@ class clitool:
             os.chdir(IMC_path)
             os.system("cls")
             banner.test()
-            os.system(f"py script.py")
+            os.system(f"{self.python_command} script.py")
             input("Press any key to continue...")
             self.return_to_menu(self.calculation_menu)
     
@@ -357,7 +372,7 @@ class clitool:
             os.chdir(watch_path)
             os.system("cls")
             banner.test()
-            os.system(f"py script.py")
+            os.system(f"{self.python_command} script.py")
             input("Press any key to continue...")
             self.return_to_menu(self.calculation_menu)       
 
