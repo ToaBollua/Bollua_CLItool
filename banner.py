@@ -1,4 +1,10 @@
 import random
+#es una instrucción utilizada para importar el módulo random
+#que proporciona funciones para generar números aleatorios 
+#y realizar otras operaciones aleatorias 
+#Este módulo es parte de la biblioteca estándar de Python, 
+#por lo que no necesitas instalar nada adicional para usarlo.
+
 
 banner1 = """\033[92m ___  ____ _    _    _  _ ____     ____ _    _ ___ ____ ____ _   
  |==] [__] |___ |___ |__| |--| ___ |___ |___ |  |  [__] [__] |___\n"""
@@ -11,6 +17,9 @@ banner2 =  """\033[92m
 
 banner3 = """\033[92m
 Bollua_CLItool...\n"""
+
+#este es \n sirve para un salto de linea 
+
 
 banner4 = """\033[92m
 __                           __                         
@@ -100,3 +109,6 @@ banners = [banner1, banner2, banner3, banner4, banner5, banner6, banner7, banner
 def test():
     result = random.choice(banners)
     print(result)
+
+#en este parte de la variable se hace los banners donde definimos
+#donde definimos el resultado y se imprime 
