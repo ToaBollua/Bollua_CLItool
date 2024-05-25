@@ -1,0 +1,13 @@
+# IGNORE PYTHON CACHE
+__pycache__
+
+# IGNORE THE TOOLS DIRECTORIES SO YOU DON'T END UP UPLOADING THE TOOLS TO THE REPO
+calculator/
+EmailAll/
+pagodo/
+sqlmap/
+IMC/
+watch/
+
+# IGNORE TRASH
+desktop.ini
