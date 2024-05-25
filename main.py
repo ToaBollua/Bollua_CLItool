@@ -9,7 +9,6 @@ try:
     import sys
     import os
     import subprocess
-    import winreg
     import time
     import shutil
     import banner
