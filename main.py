@@ -38,6 +38,8 @@ class clitool:
         self.pagodo_path = os.path.join(self.base_path, "pagodo")
         self.EmailAll_path = os.path.join(self.base_path, "EmailAll")
         self.calculator_path = os.path.join(self.base_path, "calculator")
+        self.IMC_path = os.path.join(self.base_path, "IMC")
+        self.watch_path = os.path.join(self.base_path, "watch")
         
         # TOOLS GITHUB DOWNLOAD URL SO WE CAN CALL THEM LATER
         self.sqlmap_url = 'https://github.com/sqlmapproject/sqlmap.git'
@@ -83,8 +85,6 @@ class clitool:
     
     def return_to_menu(self, menu):
         print("Returning to main menu...")
-        time.sleep(3)
-        os.system("cls")
         banner.test()
         self.menu()
 
@@ -374,14 +374,14 @@ class clitool:
 
     def delete_tools(self):
         print("===== Deleting tools... =====")
-        for dir in ["calculator", "EmailAll", "pagodo", "sqlmap", "__pycache__"]:
-            dir_path = os.path.join(self.base_path, dir)
-            if os.path.exists(dir_path):
+        dirs_to_delete = [self.sqlmap_path, self.pagodo_path, self.EmailAll_path, self.calculator_path, self.IMC_path, self.watch_path]
+        for dir in dirs_to_delete:
+            if os.path.exists(dir):
                 try:
-                    subprocess.run(["rmdir", "/s", "/q", dir_path], shell=True)
-                    print(f"Deleted {dir_path}")
+                    shutil.rmtree(dir)
+                    print(f"Deleted {dir}")
                 except OSError as e:
-                    print(f"Error deleting {dir_path}: {e}")
+                    print(f"Error deleting {dir}: {e}")
         print("===== Tools deleted. =====")
         
             
@@ -457,9 +457,9 @@ class clitool:
             self.return_to_menu(self.menu)
         
         elif tool_opt == "02" or tool_opt == "2":
-            #self.delete_tools()
-            print("This is a work in progress!")
-            self.return_to_menu(self.menu)
+            self.delete_tools()
+            #print("This is a work in progress!")
+            #self.return_to_menu(self.menu)
         
         elif tool_opt == "00" or tool_opt == "0":
             self.return_to_menu(self.menu)
