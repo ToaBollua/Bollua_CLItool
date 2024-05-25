@@ -48,7 +48,6 @@ class clitool:
         self.watch_url = 'https://github.com/ToaBollua/tools4toolkit.git'
 
         self.python_command = self.get_python_command()
-        self.check_python_version() 
        
         #CHECK IF REQUIREMENTS ARE MET
         if shutil.which('git') is None:
@@ -77,9 +76,6 @@ class clitool:
         else:
             print("Python is not installed. Please install python and try again.")
     
-    def check_python_version(self):
-        if sys.version_info.major < 3 or (sys.version_info.major == 3 and sys.version_info.minor < 11):
-            print(f"WARNING: This CLItool is designed for Python 3.11 or higher. You are currently using Python {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}")
             
     # ADDS REQUIREMENTS TO THE SYSTEM'S PATH ENVIROMENT VARIABLE
         if 'git' not in os.environ['PATH']:
