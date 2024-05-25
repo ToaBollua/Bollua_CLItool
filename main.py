@@ -9,7 +9,6 @@ try:
     import sys
     import os
     import subprocess
-    import winreg
     import time
     import shutil
     import banner
@@ -39,6 +38,8 @@ class clitool:
         self.pagodo_path = os.path.join(self.base_path, "pagodo")
         self.EmailAll_path = os.path.join(self.base_path, "EmailAll")
         self.calculator_path = os.path.join(self.base_path, "calculator")
+        self.IMC_path = os.path.join(self.base_path, "IMC")
+        self.watch_path = os.path.join(self.base_path, "watch")
         
         # TOOLS GITHUB DOWNLOAD URL SO WE CAN CALL THEM LATER
         self.sqlmap_url = 'https://github.com/sqlmapproject/sqlmap.git'
@@ -49,7 +50,6 @@ class clitool:
         self.watch_url = 'https://github.com/ToaBollua/tools4toolkit.git'
 
         self.python_command = self.get_python_command()
-        self.check_python_version() 
        
         #CHECK IF REQUIREMENTS ARE MET
         if shutil.which('git') is None:
@@ -78,9 +78,6 @@ class clitool:
         else:
             print("Python is not installed. Please install python and try again.")
     
-    def check_python_version(self):
-        if sys.version_info.major < 3 or (sys.version_info.major == 3 and sys.version_info.minor < 11):
-            print(f"WARNING: This CLItool is designed for Python 3.11 or higher. You are currently using Python {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}")
             
     # ADDS REQUIREMENTS TO THE SYSTEM'S PATH ENVIROMENT VARIABLE
         if 'git' not in os.environ['PATH']:
@@ -88,8 +85,8 @@ class clitool:
     
     def return_to_menu(self, menu):
         print("Returning to main menu...")
-        time.sleep(3)
         os.system("cls")
+        time.sleep(1)
         banner.test()
         self.menu()
 
@@ -376,19 +373,20 @@ class clitool:
             input("Press any key to continue...")
             self.return_to_menu(self.calculation_menu)       
 
-
-    def delete_tools(self):
-        print("===== Deleting tools... =====")
-        for dir in ["calculator", "EmailAll", "pagodo", "sqlmap", "__pycache__"]:
-            dir_path = os.path.join(self.base_path, dir)
-            if os.path.exists(dir_path):
-                try:
-                    subprocess.run(["rmdir", "/s", "/q", dir_path], shell=True)
-                    print(f"Deleted {dir_path}")
-                except OSError as e:
-                    print(f"Error deleting {dir_path}: {e}")
-        print("===== Tools deleted. =====")
-        
+# HERE ARE THE SETTINGS FUNCTIONS
+    
+    def change_default_directory(self):
+        new_dir = input("Enter the new defaullt directory: ")
+        if os.path.exists(new_dir) and os.path.isdir(new_dir):
+            self.base_path = new.dir
+            print("Default directory changed successfully!")
+            print(f"Default directory changed to {new_dir}")
+            input("Press any key to continue...")
+            self.return_to_menu(self.menu)
+        else:
+            print("The directory you entered does not exist or is not a directory.")
+            input("Press any key to continue...")
+            self.return_to_menu(self.menu)
             
 
 # HERE WE DISPLAY THE PENTESTING MENU AND THE TOOLS    
@@ -451,20 +449,16 @@ class clitool:
     def settings_menu(self):
         print("These are the available settings:\n")
         time.sleep(1)
-        print("01) Change the default directory (WIP)")
-        print("02) Delete tools (For update purposes) (WIP)")
+        print("01) Change the default directory")
         print("00) Return to menu.")
         
         tool_opt = input("Please select an option\n>> ")
         
         if tool_opt == "01" or tool_opt == "1":
-            print("This is a work in progress!")
-            self.return_to_menu(self.menu)
+            self.change_default_directory()
+            #print("This is a work in progress!")
+            #self.return_to_menu(self.menu)
         
-        elif tool_opt == "02" or tool_opt == "2":
-            #self.delete_tools()
-            print("This is a work in progress!")
-            self.return_to_menu(self.menu)
         
         elif tool_opt == "00" or tool_opt == "0":
             self.return_to_menu(self.menu)
