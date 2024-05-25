@@ -85,6 +85,8 @@ class clitool:
     
     def return_to_menu(self, menu):
         print("Returning to main menu...")
+        os.system("cls")
+        time.sleep(1)
         banner.test()
         self.menu()
 
@@ -371,19 +373,20 @@ class clitool:
             input("Press any key to continue...")
             self.return_to_menu(self.calculation_menu)       
 
-
-    def delete_tools(self):
-        print("===== Deleting tools... =====")
-        dirs_to_delete = [self.sqlmap_path, self.pagodo_path, self.EmailAll_path, self.calculator_path, self.IMC_path, self.watch_path]
-        for dir in dirs_to_delete:
-            if os.path.exists(dir):
-                try:
-                    shutil.rmtree(dir)
-                    print(f"Deleted {dir}")
-                except OSError as e:
-                    print(f"Error deleting {dir}: {e}")
-        print("===== Tools deleted. =====")
-        
+# HERE ARE THE SETTINGS FUNCTIONS
+    
+    def change_default_directory(self):
+        new_dir = input("Enter the new defaullt directory: ")
+        if os.path.exists(new_dir) and os.path.isdir(new_dir):
+            self.base_path = new.dir
+            print("Default directory changed successfully!")
+            print(f"Default directory changed to {new_dir}")
+            input("Press any key to continue...")
+            self.return_to_menu(self.menu)
+        else:
+            print("The directory you entered does not exist or is not a directory.")
+            input("Press any key to continue...")
+            self.return_to_menu(self.menu)
             
 
 # HERE WE DISPLAY THE PENTESTING MENU AND THE TOOLS    
@@ -447,19 +450,15 @@ class clitool:
         print("These are the available settings:\n")
         time.sleep(1)
         print("01) Change the default directory (WIP)")
-        print("02) Delete tools (For update purposes) (WIP)")
         print("00) Return to menu.")
         
         tool_opt = input("Please select an option\n>> ")
         
         if tool_opt == "01" or tool_opt == "1":
-            print("This is a work in progress!")
-            self.return_to_menu(self.menu)
-        
-        elif tool_opt == "02" or tool_opt == "2":
-            self.delete_tools()
+            self.change_default_directory()
             #print("This is a work in progress!")
             #self.return_to_menu(self.menu)
+        
         
         elif tool_opt == "00" or tool_opt == "0":
             self.return_to_menu(self.menu)
