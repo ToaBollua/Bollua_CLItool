@@ -333,6 +333,29 @@ class clitool:
             command = f"{self.python_command} emailall.py --domain {domain} run"
             os.system(command)
             input("Press any key to continue...\n")
+            
+    # THIS FUNCTION IS SPECIAL BECAUSE IT'S SUPPOSED TO WORK EVEN WITHOUT A GITHUB REPO.
+    def run_MAC_changer(self):
+        os.system("cls")
+        banner.test()
+        network_type = int(input("Network Type (1 for Ethernet, 2 for Wi-Fi): "))
+        if network_type == 1:
+            connection = "Ethernet"
+        elif network_type == 2:
+            connection = "Wi-Fi"
+        else:
+            print("Invalid network type. Please select 1 or 2.")
+            returnw
+            
+        new_mac = input("Change the MAC address to (format: XX-XX-XX-XX-XX-XX): ")
+            
+        print("[+] Changing the MAC address to " + new_mac)
+        os.system("netsh interface set interface " + connection + " admin=disable")
+        os.system("netsh interface set interface " + connection + " admin=enable")
+        os.system("netsh interface set interface " + connection + " newmac=" + new_mac.replace(":", "-"))
+        os.system("netsh interface show interface " + connection)
+            
+                
     
     def run_calculator(self):
         calculator_path = os.path.join(self.base_path, "calculator")
@@ -396,6 +419,7 @@ class clitool:
         print("01) sqlmap - SQL injection detection and exploitation tool")
         print("02) pagodo - Google-based web vulnerability scanner")
         print("03) EmailAll - Advanced email collection tool")
+        print("04) MAC_changer - Change your MAC adress")
         print("00) Return to menu.")
     
         tool_opt = input("Select a tool to install or run>> ")
@@ -408,6 +432,9 @@ class clitool:
         
         elif tool_opt == "3" or tool_opt == "03" or tool_opt == "EmailAll" or tool_opt == "emailall":
             self.install_EmailAll(self.pentest_menu)
+            
+        elif tool_opt == "4" or tool_opt == "04" or tool_opt == "MAC_changer" or tool_opt == "mac_changer":
+            self.run_MAC_changer()
         
 
         if tool_opt == "00" or tool_opt == "0" or tool_opt == "back":
