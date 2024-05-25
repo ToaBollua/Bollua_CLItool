@@ -449,7 +449,7 @@ class clitool:
     def settings_menu(self):
         print("These are the available settings:\n")
         time.sleep(1)
-        print("01) Change the default directory (WIP)")
+        print("01) Change the default directory")
         print("00) Return to menu.")
         
         tool_opt = input("Please select an option\n>> ")
