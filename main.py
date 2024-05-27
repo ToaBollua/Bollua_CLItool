@@ -345,7 +345,6 @@ class clitool:
             connection = "Wi-Fi"
         else:
             print("Invalid network type. Please select 1 or 2.")
-            returnw
             
         new_mac = input("Change the MAC address to (format: XX-XX-XX-XX-XX-XX): ")
             
@@ -410,6 +409,28 @@ class clitool:
             print("The directory you entered does not exist or is not a directory.")
             input("Press any key to continue...")
             self.return_to_menu(self.menu)
+    
+    def display_MAC_address(self):
+        network_type = int(input("Network Type (1 for Ethernet, 2 for Wi-Fi): "))
+        if network_type == 1:
+            connection = "Ethernet"
+        elif network_type == 2:
+            connection = "Wi-Fi"
+        else:
+            print("Invalid network type. Please select 1 or 2.")
+            return
+
+        if connection == "Ethernet":
+            mac_address = subprocess.check_output(["getmac", "/v", connection]).decode().split("\n")[1].split()[-1]
+        else:
+            output = subprocess.check_output(["netsh", "interface", "show", "interface"]).decode()
+            if "Wi-Fi" in output:
+                mac_address = output.split("Wi-Fi")[1].split("\n")[1].split(":")[1].strip()
+            else:
+                print("Wi-Fi interface not found.")
+                return
+
+        print("The MAC address of", connection, "is", mac_address)
             
 
 # HERE WE DISPLAY THE PENTESTING MENU AND THE TOOLS    
@@ -477,6 +498,7 @@ class clitool:
         print("These are the available settings:\n")
         time.sleep(1)
         print("01) Change the default directory")
+        print("02) Display MAC address")
         print("00) Return to menu.")
         
         tool_opt = input("Please select an option\n>> ")
@@ -486,14 +508,15 @@ class clitool:
             #print("This is a work in progress!")
             #self.return_to_menu(self.menu)
         
+        elif tool_opt == "02" or tool_opt == "2":
+            self.display_MAC_address()
         
         elif tool_opt == "00" or tool_opt == "0":
-            self.return_to_menu(self.menu)
+            self.menu()
         
         else:
             print("\nPlease select a valid input, returning now.\n")
-            return_to_menu(self.menu)
-            self.settings_menu()
+            self.menu()
             
 # THIS IS THE MAIN MENU
 
