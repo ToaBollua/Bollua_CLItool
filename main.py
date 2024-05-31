@@ -532,6 +532,7 @@ class clitool:
             self.calculation_menu()
         
 # HERE WE DISPLAY THE SETTINGS MENU
+# MOST OF THESE FUNCTIONS ARE BROKEN! SO DEAL WITH THEM CAREFULLY
     def settings_menu(self):
         print("These are the available settings:\n")
         time.sleep(1)
@@ -542,12 +543,14 @@ class clitool:
         tool_opt = input("Please select an option\n>> ")
         
         if tool_opt == "01" or tool_opt == "1":
-            self.change_default_directory()
-            #print("This is a work in progress!")
-            #self.return_to_menu(self.menu)
+            #self.change_default_directory()
+            print("This is a work in progress!")
+            self.return_to_menu(self.menu)
         
         elif tool_opt == "02" or tool_opt == "2":
-            self.display_MAC_address()
+            print("This is a work in progress!")
+            self.return_to_menu(menu)
+            #self.display_MAC_address()
         
         elif tool_opt == "00" or tool_opt == "0":
             self.menu()
