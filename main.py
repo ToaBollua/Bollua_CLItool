@@ -40,6 +40,7 @@ class clitool:
         self.calculator_path = os.path.join(self.base_path, "calculator")
         self.IMC_path = os.path.join(self.base_path, "IMC")
         self.watch_path = os.path.join(self.base_path, "watch")
+        self.MAC_changer_path = os.path.join(self.base_path, "MAC_changer")
         
         # TOOLS GITHUB DOWNLOAD URL SO WE CAN CALL THEM LATER
         self.sqlmap_url = 'https://github.com/sqlmapproject/sqlmap.git'
@@ -48,7 +49,9 @@ class clitool:
         self.calculator_url = 'https://github.com/ToaBollua/tools4toolkit.git'
         self.IMC_url = 'https://github.com/ToaBollua/tools4toolkit.git'
         self.watch_url = 'https://github.com/ToaBollua/tools4toolkit.git'
+        self.MAC_changer_url = 'https://github.com/EngineerRancho/MAC_changer.git'
 
+        #THIS SETS YOUR DEFAULT PYTHON COMMAND AFTER CHECKING
         self.python_command = self.get_python_command()
        
         #CHECK IF REQUIREMENTS ARE MET
@@ -67,7 +70,7 @@ class clitool:
                 os.system("cls")
                 banner.test()
                 return
-            
+    # THIS CHECKS WHICH PYTHON COMMAND IS USED IN THE USER'S MACHINE AND USES THAT TO OPEN OTHER PYTHON FILES
     def get_python_command(self):
         if shutil.which('py') is not None:
             return "py"
@@ -76,7 +79,7 @@ class clitool:
         elif shutil.which("python3") is not None:
             return "python3"
         else:
-            print("Python is not installed. Please install python and try again.")
+            print("Python is not installed. Please install python and try again.\n===== RECOMMENDED VERSION 3.11.8 =====")
     
             
     # ADDS REQUIREMENTS TO THE SYSTEM'S PATH ENVIROMENT VARIABLE
@@ -259,7 +262,7 @@ class clitool:
             else:
                 self.return_to_menu(menu)
     
-
+    
 
 # HERE WE RUN THE TOOLS
     
