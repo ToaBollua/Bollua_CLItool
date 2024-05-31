@@ -4,7 +4,7 @@
 __author__ = "Bollua"
 __python_version__ = "3.11.8"
 
-
+# IMPORTS SCRIPT'S DEPENDENCIES
 try:
     import sys
     import os
