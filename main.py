@@ -262,7 +262,29 @@ class clitool:
             else:
                 self.return_to_menu(menu)
     
-    
+    def install_MAC_changer(self, menu):
+        MAC_changer_path = os.path.join(self.base_path, "MAC_changer")
+        if os.path.exists(MAC_changer_path):
+            print("===== MAC_changer is already installed =====")
+            print("===== MAC_changer is ready to use =====")
+            run_opt == input("Do you want to run MAC_changer?/n(Y/N)\n>> ")
+            if run_opt.lower() == "y":
+                self.run_MAC_changer()
+            else:
+                self.return_to_menu(menu)
+        
+        else:
+            print("===== MAC_changer is not installed. =====")
+            print("===== Installing MAC_changer... =====")
+            os.system(f"git clone {self.MAC_changer_url} {self.MAC_changer_path}")
+            print("===== MAC_changer succesfully installed =====")
+            print("===== MAC_changer is ready to use =====")
+            run_opt = input("Do you want to run MAC_changer?\n(Y/N)\n>> ")
+            if run_opt.lower() == 'y':
+                self.run_MAC_changer()
+            else:
+                self.retun_to_menu(menu)
+
 
 # HERE WE RUN THE TOOLS
     
@@ -397,6 +419,19 @@ class clitool:
             os.system(f"{self.python_command} script.py")
             input("Press any key to continue...")
             self.return_to_menu(self.calculation_menu)       
+        
+    def run_MAC_changer(self):
+        MAC_changer_path = os.path.join(self.base_path, "MAC_changer")
+        if not os.path.exists(MAC_changer_path):
+            print("===== MAC_changer is not installed. Please install it first... =====")
+            self.install_MAC_changer(self.calculation_menu)
+        else:
+            os.chdir(MAC_changer_path)
+            os.system("cls")
+            banner.test()
+            os.system(f"{self.python_command} MAC_windows.py")
+            input("Press any key to continue...")
+            self.return_to_menu(self.pentest_menu)
 
 # HERE ARE THE SETTINGS FUNCTIONS
     
