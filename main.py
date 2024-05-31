@@ -4,7 +4,7 @@
 __author__ = "Bollua"
 __python_version__ = "3.11.8"
 
-
+# IMPORTS SCRIPT'S DEPENDENCIES
 try:
     import sys
     import os
@@ -40,6 +40,7 @@ class clitool:
         self.calculator_path = os.path.join(self.base_path, "calculator")
         self.IMC_path = os.path.join(self.base_path, "IMC")
         self.watch_path = os.path.join(self.base_path, "watch")
+        self.MAC_changer_path = os.path.join(self.base_path, "MAC_changer")
         
         # TOOLS GITHUB DOWNLOAD URL SO WE CAN CALL THEM LATER
         self.sqlmap_url = 'https://github.com/sqlmapproject/sqlmap.git'
@@ -48,7 +49,9 @@ class clitool:
         self.calculator_url = 'https://github.com/ToaBollua/tools4toolkit.git'
         self.IMC_url = 'https://github.com/ToaBollua/tools4toolkit.git'
         self.watch_url = 'https://github.com/ToaBollua/tools4toolkit.git'
+        self.MAC_changer_url = 'https://github.com/EngineerRancho/MAC_changer.git'
 
+        #THIS SETS YOUR DEFAULT PYTHON COMMAND AFTER CHECKING
         self.python_command = self.get_python_command()
        
         #CHECK IF REQUIREMENTS ARE MET
@@ -67,7 +70,7 @@ class clitool:
                 os.system("cls")
                 banner.test()
                 return
-            
+    # THIS CHECKS WHICH PYTHON COMMAND IS USED IN THE USER'S MACHINE AND USES THAT TO OPEN OTHER PYTHON FILES
     def get_python_command(self):
         if shutil.which('py') is not None:
             return "py"
@@ -76,7 +79,7 @@ class clitool:
         elif shutil.which("python3") is not None:
             return "python3"
         else:
-            print("Python is not installed. Please install python and try again.")
+            print("Python is not installed. Please install python and try again.\n===== RECOMMENDED VERSION 3.11.8 =====")
     
             
     # ADDS REQUIREMENTS TO THE SYSTEM'S PATH ENVIROMENT VARIABLE
@@ -259,6 +262,28 @@ class clitool:
             else:
                 self.return_to_menu(menu)
     
+    def install_MAC_changer(self, menu):
+        MAC_changer_path = os.path.join(self.base_path, "MAC_changer")
+        if os.path.exists(MAC_changer_path):
+            print("===== MAC_changer is already installed =====")
+            print("===== MAC_changer is ready to use =====")
+            run_opt == input("Do you want to run MAC_changer?/n(Y/N)\n>> ")
+            if run_opt.lower() == "y":
+                self.run_MAC_changer()
+            else:
+                self.return_to_menu(menu)
+        
+        else:
+            print("===== MAC_changer is not installed. =====")
+            print("===== Installing MAC_changer... =====")
+            os.system(f"git clone {self.MAC_changer_url} {self.MAC_changer_path}")
+            print("===== MAC_changer succesfully installed =====")
+            print("===== MAC_changer is ready to use =====")
+            run_opt = input("Do you want to run MAC_changer?\n(Y/N)\n>> ")
+            if run_opt.lower() == 'y':
+                self.run_MAC_changer()
+            else:
+                self.retun_to_menu(menu)
 
 
 # HERE WE RUN THE TOOLS
@@ -333,6 +358,28 @@ class clitool:
             command = f"{self.python_command} emailall.py --domain {domain} run"
             os.system(command)
             input("Press any key to continue...\n")
+            
+    # THIS FUNCTION IS SPECIAL BECAUSE IT'S SUPPOSED TO WORK EVEN WITHOUT A GITHUB REPO.
+    def run_MAC_changer(self):
+        os.system("cls")
+        banner.test()
+        network_type = int(input("Network Type (1 for Ethernet, 2 for Wi-Fi): "))
+        if network_type == 1:
+            connection = "Ethernet"
+        elif network_type == 2:
+            connection = "Wi-Fi"
+        else:
+            print("Invalid network type. Please select 1 or 2.")
+            
+        new_mac = input("Change the MAC address to (format: XX-XX-XX-XX-XX-XX): ")
+            
+        print("[+] Changing the MAC address to " + new_mac)
+        os.system("netsh interface set interface " + connection + " admin=disable")
+        os.system("netsh interface set interface " + connection + " admin=enable")
+        os.system("netsh interface set interface " + connection + " newmac=" + new_mac.replace(":", "-"))
+        os.system("netsh interface show interface " + connection)
+            
+                
     
     def run_calculator(self):
         calculator_path = os.path.join(self.base_path, "calculator")
@@ -372,6 +419,19 @@ class clitool:
             os.system(f"{self.python_command} script.py")
             input("Press any key to continue...")
             self.return_to_menu(self.calculation_menu)       
+        
+    def run_MAC_changer(self):
+        MAC_changer_path = os.path.join(self.base_path, "MAC_changer")
+        if not os.path.exists(MAC_changer_path):
+            print("===== MAC_changer is not installed. Please install it first... =====")
+            self.install_MAC_changer(self.calculation_menu)
+        else:
+            os.chdir(MAC_changer_path)
+            os.system("cls")
+            banner.test()
+            os.system(f"{self.python_command} MAC_windows.py")
+            input("Press any key to continue...")
+            self.return_to_menu(self.pentest_menu)
 
 # HERE ARE THE SETTINGS FUNCTIONS
     
@@ -387,6 +447,28 @@ class clitool:
             print("The directory you entered does not exist or is not a directory.")
             input("Press any key to continue...")
             self.return_to_menu(self.menu)
+    
+    def display_MAC_address(self):
+        network_type = int(input("Network Type (1 for Ethernet, 2 for Wi-Fi): "))
+        if network_type == 1:
+            connection = "Ethernet"
+        elif network_type == 2:
+            connection = "Wi-Fi"
+        else:
+            print("Invalid network type. Please select 1 or 2.")
+            return
+
+        if connection == "Ethernet":
+            mac_address = subprocess.check_output(["getmac", "/v", connection]).decode().split("\n")[1].split()[-1]
+        else:
+            output = subprocess.check_output(["netsh", "interface", "show", "interface"]).decode()
+            if "Wi-Fi" in output:
+                mac_address = output.split("Wi-Fi")[1].split("\n")[1].split(":")[1].strip()
+            else:
+                print("Wi-Fi interface not found.")
+                return
+
+        print("The MAC address of", connection, "is", mac_address)
             
 
 # HERE WE DISPLAY THE PENTESTING MENU AND THE TOOLS    
@@ -396,6 +478,7 @@ class clitool:
         print("01) sqlmap - SQL injection detection and exploitation tool")
         print("02) pagodo - Google-based web vulnerability scanner")
         print("03) EmailAll - Advanced email collection tool")
+        print("04) MAC_changer - Change your MAC adress")
         print("00) Return to menu.")
     
         tool_opt = input("Select a tool to install or run>> ")
@@ -408,6 +491,9 @@ class clitool:
         
         elif tool_opt == "3" or tool_opt == "03" or tool_opt == "EmailAll" or tool_opt == "emailall":
             self.install_EmailAll(self.pentest_menu)
+            
+        elif tool_opt == "4" or tool_opt == "04" or tool_opt == "MAC_changer" or tool_opt == "mac_changer":
+            self.run_MAC_changer()
         
 
         if tool_opt == "00" or tool_opt == "0" or tool_opt == "back":
@@ -446,27 +532,32 @@ class clitool:
             self.calculation_menu()
         
 # HERE WE DISPLAY THE SETTINGS MENU
+# MOST OF THESE FUNCTIONS ARE BROKEN! SO DEAL WITH THEM CAREFULLY
     def settings_menu(self):
         print("These are the available settings:\n")
         time.sleep(1)
         print("01) Change the default directory")
+        print("02) Display MAC address")
         print("00) Return to menu.")
         
         tool_opt = input("Please select an option\n>> ")
         
         if tool_opt == "01" or tool_opt == "1":
-            self.change_default_directory()
-            #print("This is a work in progress!")
-            #self.return_to_menu(self.menu)
+            #self.change_default_directory()
+            print("This is a work in progress!")
+            self.return_to_menu(self.menu)
         
+        elif tool_opt == "02" or tool_opt == "2":
+            print("This is a work in progress!")
+            self.return_to_menu(menu)
+            #self.display_MAC_address()
         
         elif tool_opt == "00" or tool_opt == "0":
-            self.return_to_menu(self.menu)
+            self.menu()
         
         else:
             print("\nPlease select a valid input, returning now.\n")
-            return_to_menu(self.menu)
-            self.settings_menu()
+            self.menu()
             
 # THIS IS THE MAIN MENU
 
