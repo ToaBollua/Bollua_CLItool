@@ -478,7 +478,7 @@ class clitool:
         print("01) sqlmap - SQL injection detection and exploitation tool")
         print("02) pagodo - Google-based web vulnerability scanner")
         print("03) EmailAll - Advanced email collection tool")
-        print("04) MAC_changer - Change your MAC adress")
+        print("04) MAC_changer - Change your MAC address")
         print("00) Return to menu.")
     
         tool_opt = input("Select a tool to install or run>> ")
