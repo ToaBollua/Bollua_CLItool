@@ -59,7 +59,7 @@ class clitool:
             self.git_opt = input("git is not installed. Do you want to install git?\n(Y/N)>> ")
             if git_opt == "Y" or self.git_opt == "y":
                 print("===== Installing git... =====\n")
-                os.system('py -m pip install git')
+                os.system(f'{python_command} -m pip install git')
                 print("===== Done! =====")
             elif self.git_opt == "N" or self.git_opt == "n":
                 print("Oh then fuck you...")
@@ -293,8 +293,8 @@ class clitool:
         target = input("Enter the target URL (e.g 'http[s]://target[:port]/[path/]'): ")
         technique = input("Enter the technique to use (e.g. -b for boolean-based blind, -t for time-based, etc.): ")
         dbms = input("Enter the DBMS (e.g. MySQL, PostgreSQL, etc.): ")
-        level = input("Enter the level of testing (1-5): ")
-        risk = input("Enter the risk (1-3): ")
+        level = input("Enter the level of testing (1-5, where 1 is the least intrusive and 5 is the most intrusive): ")
+        risk = input("Enter the risk (1-3, where 1 is the least risky and 3 is the most risky): ")
         try:
             level = int(level)
             risk = int(risk)
@@ -356,8 +356,15 @@ class clitool:
                 os.system("py -m pip install lxml")
             domain = input("Enter the domain to search (e.g. example.com): ")
             command = f"{self.python_command} emailall.py --domain {domain} run"
+            process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            while process.poll() is None:
+                quit_command = input("Enter 'q' to quit the program: ")
+                if quit_command.lower() == 'q':
+                    process.terminate()
+                    break
             os.system(command)
             input("Press any key to continue...\n")
+            self.return_to_menu(self.menu)
             
     # THIS FUNCTION IS SPECIAL BECAUSE IT'S SUPPOSED TO WORK EVEN WITHOUT A GITHUB REPO.
     def run_MAC_changer(self):
