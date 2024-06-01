@@ -545,11 +545,13 @@ class clitool:
         if tool_opt == "01" or tool_opt == "1":
             #self.change_default_directory()
             print("This is a work in progress!")
+            time.sleep(2)
             self.return_to_menu(self.menu)
         
         elif tool_opt == "02" or tool_opt == "2":
             print("This is a work in progress!")
-            self.return_to_menu(menu)
+            time.sleep(2)
+            self.return_to_menu(self.menu)
             #self.display_MAC_address()
         
         elif tool_opt == "00" or tool_opt == "0":
