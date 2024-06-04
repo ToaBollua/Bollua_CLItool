@@ -57,9 +57,14 @@ class clitool:
         #CHECK IF REQUIREMENTS ARE MET
         if shutil.which('git') is None:
             self.git_opt = input("git is not installed. Do you want to install git?\n(Y/N)>> ")
-            if git_opt == "Y" or self.git_opt == "y":
+            if self.git_opt == "Y" or self.git_opt == "y":
                 print("===== Installing git... =====\n")
-                os.system(f'{python_command} -m pip install git')
+                if platform.system() == 'Windows':
+                    os.system('winget install --id Git.Git')
+                elif platform.system() == 'Darwin':  # macOS
+                    os.system('brew install git')
+                else:  # Linux
+                    os.system('sudo apt-get install git')  # or yum, zypper, etc. depending on the distro
                 print("===== Done! =====")
             elif self.git_opt == "N" or self.git_opt == "n":
                 print("Oh then fuck you...")
