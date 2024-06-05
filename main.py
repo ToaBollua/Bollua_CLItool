@@ -41,6 +41,8 @@ class clitool:
         self.IMC_path = os.path.join(self.base_path, "IMC")
         self.watch_path = os.path.join(self.base_path, "watch")
         self.MAC_changer_path = os.path.join(self.base_path, "MAC_changer")
+        self.QRcode_path = os.path.join(self.base_path, "QRcode")
+        self.barcode_path = os.path.join(self.base_path, "barcode")
         
         # TOOLS GITHUB DOWNLOAD URL SO WE CAN CALL THEM LATER
         self.sqlmap_url = 'https://github.com/sqlmapproject/sqlmap.git'
@@ -50,7 +52,9 @@ class clitool:
         self.IMC_url = 'https://github.com/ToaBollua/tools4toolkit.git'
         self.watch_url = 'https://github.com/ToaBollua/tools4toolkit.git'
         self.MAC_changer_url = 'https://github.com/EngineerRancho/MAC_changer.git'
-
+        self.QRcode_url = 'https://github.com/ToaBollua/tools4toolkit.git'
+        self.barcode_url = 'https://github.com/ToaBollua/tools4toolkit.git'
+        
         #THIS SETS YOUR DEFAULT PYTHON COMMAND AFTER CHECKING
         self.python_command = self.get_python_command()
        
@@ -290,6 +294,51 @@ class clitool:
             else:
                 self.retun_to_menu(menu)
 
+    def install_QRcode(self, menu):
+        QRcode_path = os.path.join(self.base_path, "QRcode")
+        if os.path.exists(QRcode_path):
+            print("===== QRcode is already installed =====")
+            print("===== QRcode is ready to use =====")
+            run_opt = input("Do you want to run QRcode?\n(Y/N)\n>> ")
+            if run_opt.lower() == "y":
+                self.run_QRcode()
+            else:
+                self.return_to_menu(menu)
+                
+        else:
+            print("===== QRcode is not installed =====")
+            print("===== Installing QRcode... =====")
+            os.system(f"git clone -b qrcode {self.QRcode_url} {QRcode_path}")
+            print("===== QRcode succesfully installed =====")
+            print("===== QRcode is ready to use =====")
+            run_opt = input("Do you want to run QRcode?\n(Y/N)\n>> ")
+            if run_opt.lower() == "y":
+                self.run_QRcode()
+            else:
+                self.return_to_menu(menu)
+                
+    def install_barcode(self, menu):
+        barcode_path = os.path.join(self.base_path, "barcode")
+        if os.path.exists(barcode_path):
+            print("===== barcode is already installed =====")
+            print("===== barcode is ready to use =====")
+            run_opt = input("Do you want to run barcode?\n(Y/N)\n>> ")
+            if run_opt.lower() == "y":
+                self.run_barcode()
+            else:
+                self.return_to_menu(menu)
+                
+        else:
+            print("===== barcode is not installed =====")
+            print("===== Installing barcode... =====")
+            os.system(f"git clone -b barcode {self.barcode_url} {barcode_path}")
+            print("===== barcode succesfully installed =====")
+            print("===== barcode is ready to use =====")
+            run_opt = input("Do you want to run barcode?\n(Y/N)\n>> ")
+            if run_opt.lower() == "y":
+                self.run_barcode()
+            else:
+                self.return_to_menu(menu)
 
 # HERE WE RUN THE TOOLS
     
@@ -445,9 +494,34 @@ class clitool:
             input("Press any key to continue...")
             self.return_to_menu(self.pentest_menu)
 
-# HERE ARE THE SETTINGS FUNCTIONS
+    def run_QRcode(self):
+        QRcode_path = os.path.join(self.base_path, "QRcode")
+        if not os.path.exists(QRcode_path):
+            print("===== QRcode is not installed. Please install it first... =====")
+            self.install_QRcode(self.calculation_menu)
+        else:
+            os.chdir(QRcode_path)
+            os.system("cls")
+            banner.test()
+            os.system(f"{self.python_command} script.py")
+            input("Press any key to continue...")
+            self.return_to_menu(self.calculation_menu)    
     
-    def change_default_directory(self):
+    def run_barcode(self):
+        barcode_path = os.path.join(self.base_path, "barcode")
+        if not os.path.exists(barcode_path):
+            print("===== barcode is not installed. Please install it first... =====")
+            self.install_barcode(self.calculation_menu)
+        else:
+            os.chdir(barcode_path)
+            os.system("cls")
+            banner.test()
+            os.system(f"{self.python_command} script.py")
+            input("Press any key to continue...")
+            self.return_to_menu(self.calculation_menu)    
+            
+# HERE ARE THE SETTINGS FUNCTIONS
+    def change_default_directory(self): # NEED FIXING
         new_dir = input("Enter the new defaullt directory: ")
         if os.path.exists(new_dir) and os.path.isdir(new_dir):
             self.base_path = new.dir
@@ -460,7 +534,7 @@ class clitool:
             input("Press any key to continue...")
             self.return_to_menu(self.menu)
     
-    def display_MAC_address(self):
+    def display_MAC_address(self): # NEED FIXING
         network_type = int(input("Network Type (1 for Ethernet, 2 for Wi-Fi): "))
         if network_type == 1:
             connection = "Ethernet"
@@ -481,7 +555,25 @@ class clitool:
                 return
 
         print("The MAC address of", connection, "is", mac_address)
+        
+# HERE WE DISPLAY THE UTILITY TOOLS MENU
+    def utility_menu(self):
+        print("These are the utility tools available")
+        time.sleep(1)
+        print("01) QRcode - Generate a QR code")
+        print("02) barcode - Generate a barcode")
+        
+        tool_opt = input("Select a tool to install or run>> ")
+        
+        if tool_opt == "1" or tool_opt == "01" or tool_opt == "QRcode":
+            self.install_QRcode(self.utility_menu)
+        
+        elif tool_opt == "2" or tool_opt == "02" or tool_opt == "barcode":
+            self.install_barcode(self.utility_menu)
             
+        else:
+            print("\nPlease select a valid input, returning now.")
+            self.return_to_menu(self.menu)
 
 # HERE WE DISPLAY THE PENTESTING MENU AND THE TOOLS    
     def pentest_menu(self):
@@ -581,6 +673,7 @@ class clitool:
         time.sleep(1)
         print("01) Pentesting menu.")
         print("02) Calculation menu.")
+        print("03) Utility menu.")
         print("99) Settings.")
         print("00) Exit CLItool")
         
@@ -595,6 +688,11 @@ class clitool:
             os.system('cls')
             banner.test()
             self.calculation_menu()
+        
+        elif menu_opt == "3" or menu_opt == "03" or menu_opt == "utility":
+            os.system("cls")
+            banner.test()
+            self.utility_menu()
             
         elif menu_opt == "99" or menu_opt == "settings":
             os.system("cls")

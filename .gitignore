@@ -9,6 +9,8 @@ sqlmap/
 IMC/
 watch/
 MAC_changer/
+QRcode/
+barcode/
 
 # IGNORE TRASH
 desktop.ini
