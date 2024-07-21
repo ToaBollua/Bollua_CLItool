@@ -12,9 +12,11 @@ try:
     import time
     import shutil
     import banner
-    import logging
-except Exception as e:
-    logging.error(e)
+except ModuleNotFoundError:
+    quit()
+
+
+# This sets the program's path
 
 script_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(script_path)
@@ -23,7 +25,7 @@ cli_tool_dir = os.path.join(home_dir, "CLItool")
 path = os.environ["PATH"]
 if cli_tool_dir not in path:
     os.environ["PATH"] = cli_tool_dir + os.pathsep + path
-    
+
 
 # HERE GOES THE TOOLS GITHUB LINK
 class clitool:
@@ -43,32 +45,36 @@ class clitool:
         self.MAC_changer_path = os.path.join(self.base_path, "MAC_changer")
         self.QRcode_path = os.path.join(self.base_path, "QRcode")
         self.barcode_path = os.path.join(self.base_path, "barcode")
-        
+
         # TOOLS GITHUB DOWNLOAD URL SO WE CAN CALL THEM LATER
-        self.sqlmap_url = 'https://github.com/sqlmapproject/sqlmap.git'
-        self.pagodo_url = 'https://github.com/opsdisk/pagodo.git'
-        self.EmailAll_url = 'https://github.com/Taonn/EmailAll.git'
-        self.calculator_url = 'https://github.com/ToaBollua/tools4toolkit.git'
-        self.IMC_url = 'https://github.com/ToaBollua/tools4toolkit.git'
-        self.watch_url = 'https://github.com/ToaBollua/tools4toolkit.git'
-        self.MAC_changer_url = 'https://github.com/EngineerRancho/MAC_changer.git'
-        self.QRcode_url = 'https://github.com/ToaBollua/tools4toolkit.git'
-        self.barcode_url = 'https://github.com/ToaBollua/tools4toolkit.git'
-        
-        #THIS SETS YOUR DEFAULT PYTHON COMMAND AFTER CHECKING
+        self.sqlmap_url = "https://github.com/sqlmapproject/sqlmap.git"
+        self.pagodo_url = "https://github.com/opsdisk/pagodo.git"
+        self.EmailAll_url = "https://github.com/Taonn/EmailAll.git"
+        self.calculator_url = "https://github.com/ToaBollua/tools4toolkit.git"
+        self.IMC_url = "https://github.com/ToaBollua/tools4toolkit.git"
+        self.watch_url = "https://github.com/ToaBollua/tools4toolkit.git"
+        self.MAC_changer_url = "https://github.com/EngineerRancho/MAC_changer.git"
+        self.QRcode_url = "https://github.com/ToaBollua/tools4toolkit.git"
+        self.barcode_url = "https://github.com/ToaBollua/tools4toolkit.git"
+
+        # THIS SETS YOUR DEFAULT PYTHON COMMAND AFTER CHECKING
         self.python_command = self.get_python_command()
-       
-        #CHECK IF REQUIREMENTS ARE MET
-        if shutil.which('git') is None:
-            self.git_opt = input("git is not installed. Do you want to install git?\n(Y/N)>> ")
+
+        # CHECK IF REQUIREMENTS ARE MET
+        if shutil.which("git") is None:
+            self.git_opt = input(
+                "git is not installed. Do you want to install git?\n(Y/N)>> "
+            )
             if self.git_opt == "Y" or self.git_opt == "y":
                 print("===== Installing git... =====\n")
-                if platform.system() == 'Windows':
-                    os.system('winget install --id Git.Git')
-                elif platform.system() == 'Darwin':  # macOS
-                    os.system('brew install git')
+                if platform.system() == "Windows":
+                    os.system("winget install --id Git.Git")
+                elif platform.system() == "Darwin":  # macOS
+                    os.system("brew install git")
                 else:  # Linux
-                    os.system('sudo apt-get install git')  # or yum, zypper, etc. depending on the distro
+                    os.system(
+                        "sudo pacman -S install git"
+                    )  # or yum, zypper, etc. depending on the distro
                 print("===== Done! =====")
             elif self.git_opt == "N" or self.git_opt == "n":
                 print("Oh then fuck you...")
@@ -76,34 +82,36 @@ class clitool:
             else:
                 print("Please insert a valid option! Exiting now. . .")
                 time.sleep(3)
-                os.system("cls")
+                os.system("clear")
                 banner.test()
                 return
+
     # THIS CHECKS WHICH PYTHON COMMAND IS USED IN THE USER'S MACHINE AND USES THAT TO OPEN OTHER PYTHON FILES
     def get_python_command(self):
-        if shutil.which('py') is not None:
+        if shutil.which("py") is not None:
             return "py"
-        elif shutil.which('python') is not None:
+        elif shutil.which("python") is not None:
             return "python"
         elif shutil.which("python3") is not None:
             return "python3"
         else:
-            print("Python is not installed. Please install python and try again.\n===== RECOMMENDED VERSION 3.11.8 =====")
-    
-            
-    # ADDS REQUIREMENTS TO THE SYSTEM'S PATH ENVIROMENT VARIABLE
-        if 'git' not in os.environ['PATH']:
-            os.environ['PATH'] += os.pathsep + '/usr/bin'
-    
+            print(
+                "Python is not installed. Please install python and try again.\n===== RECOMMENDED VERSION 3.11.8 ====="
+            )
+
+        # ADDS REQUIREMENTS TO THE SYSTEM'S PATH ENVIROMENT VARIABLE
+        if "git" not in os.environ["PATH"]:
+            os.environ["PATH"] += os.pathsep + "/usr/bin"
+
     def return_to_menu(self, menu):
         print("Returning to main menu...")
-        os.system("cls")
+        os.system("clear")
         time.sleep(1)
         banner.test()
         self.menu()
 
     # HERE WE INSTALL THE TOOLS
-        
+
     def install_sqlmap(self, menu):
         sqlmap_path = os.path.join(self.base_path, "sqlmap")
         if os.path.exists(sqlmap_path):
@@ -125,7 +133,7 @@ class clitool:
                 self.run_sqlmap(menu)
             else:
                 self.return_to_menu(menu)
-            
+
     def install_holehe(self, menu):
         holehe_path = os.path.join(self.base_path, "holehe")
         if os.path.exists(holehe_path):
@@ -135,7 +143,9 @@ class clitool:
         else:
             print("===== holehe is not installed. =====")
             print("===== Installing holehe... =====")
-            os.system(f"git clone {self.holehe_url} -b master --single-branch --depth 1 {holehe_path}")
+            os.system(
+                f"git clone {self.holehe_url} -b master --single-branch --depth 1 {holehe_path}"
+            )
             os.chdir(holehe_path)
             os.system(f"{self.python_command} -m pip uninstall holehe --yes")
             os.system(f"{self.python_command} -m pip install -e {holehe_path}")
@@ -147,7 +157,7 @@ class clitool:
                 run_holehe(menu)
             else:
                 self.return_to_menu(menu)
-    
+
     def install_pagodo(self, menu):
         pagodo_path = os.path.join(self.base_path, "pagodo")
         if os.path.exists(pagodo_path):
@@ -162,7 +172,9 @@ class clitool:
         else:
             print("===== pagodo is not installed. =====")
             print("===== Installing pagodo... =====")
-            os.system(f"git clone {self.pagodo_url} -b master --single-branch --depth 1 {pagodo_path}")
+            os.system(
+                f"git clone {self.pagodo_url} -b master --single-branch --depth 1 {pagodo_path}"
+            )
             print("===== Installing pagodo requirements... =====")
             os.chdir(pagodo_path)
             os.system(f"{self.python_command} -m pip install -r requirements.txt")
@@ -175,7 +187,7 @@ class clitool:
                 self.run_pagodo()
             else:
                 self.return_to_menu(menu)
-                
+
     def install_EmailAll(self, menu):
         EmailAll_path = os.path.join(self.base_path, "EmailAll")
         if os.path.exists(EmailAll_path):
@@ -201,7 +213,7 @@ class clitool:
                 self.run_EmailAll()
             else:
                 self.return_to_menu(menu)
-    
+
     def install_calculator(self, menu):
         calculator_path = os.path.join(self.base_path, "calculator")
         if os.path.exists(calculator_path):
@@ -212,11 +224,13 @@ class clitool:
                 self.run_calculator()
             else:
                 self.return_to_menu(menu)
-                
+
         else:
             print("===== calculator is not installed =====")
             print("===== Installing calculator... =====")
-            os.system(f"git clone -b calculator {self.calculator_url} {calculator_path}")
+            os.system(
+                f"git clone -b calculator {self.calculator_url} {calculator_path}"
+            )
             print("===== calculator succesfully installed =====")
             print("===== calculator is ready to use =====")
             run_opt = input("Do you want to run calculator?\n(Y/N)\n>> ")
@@ -224,7 +238,7 @@ class clitool:
                 self.run_calculator()
             else:
                 self.return_to_menu(menu)
-    
+
     def install_IMC(self, menu):
         IMC_path = os.path.join(self.base_path, "IMC")
         if os.path.exists(IMC_path):
@@ -235,7 +249,7 @@ class clitool:
                 self.run_IMC()
             else:
                 self.return_to_menu(menu)
-        
+
         else:
             print("===== IMC is not installed =====")
             print("===== Installing IMC... =====")
@@ -247,7 +261,7 @@ class clitool:
                 self.run_IMC()
             else:
                 self.return_to_menu(menu)
-                
+
     def install_watch(self, menu):
         watch_path = os.path.join(self.base_path, "watch")
         if os.path.exists(watch_path):
@@ -258,7 +272,7 @@ class clitool:
                 self.run_watch()
             else:
                 self.return_to_menu(menu)
-                
+
         else:
             print("===== watch is not installed =====")
             print("===== installing watch... =====")
@@ -270,7 +284,7 @@ class clitool:
                 self.run_watch()
             else:
                 self.return_to_menu(menu)
-    
+
     def install_MAC_changer(self, menu):
         MAC_changer_path = os.path.join(self.base_path, "MAC_changer")
         if os.path.exists(MAC_changer_path):
@@ -281,7 +295,7 @@ class clitool:
                 self.run_MAC_changer()
             else:
                 self.return_to_menu(menu)
-        
+
         else:
             print("===== MAC_changer is not installed. =====")
             print("===== Installing MAC_changer... =====")
@@ -289,7 +303,7 @@ class clitool:
             print("===== MAC_changer succesfully installed =====")
             print("===== MAC_changer is ready to use =====")
             run_opt = input("Do you want to run MAC_changer?\n(Y/N)\n>> ")
-            if run_opt.lower() == 'y':
+            if run_opt.lower() == "y":
                 self.run_MAC_changer()
             else:
                 self.retun_to_menu(menu)
@@ -304,7 +318,7 @@ class clitool:
                 self.run_QRcode()
             else:
                 self.return_to_menu(menu)
-                
+
         else:
             print("===== QRcode is not installed =====")
             print("===== Installing QRcode... =====")
@@ -316,7 +330,7 @@ class clitool:
                 self.run_QRcode()
             else:
                 self.return_to_menu(menu)
-                
+
     def install_barcode(self, menu):
         barcode_path = os.path.join(self.base_path, "barcode")
         if os.path.exists(barcode_path):
@@ -327,7 +341,7 @@ class clitool:
                 self.run_barcode()
             else:
                 self.return_to_menu(menu)
-                
+
         else:
             print("===== barcode is not installed =====")
             print("===== Installing barcode... =====")
@@ -340,15 +354,21 @@ class clitool:
             else:
                 self.return_to_menu(menu)
 
-# HERE WE RUN THE TOOLS
-    
+    # HERE WE RUN THE TOOLS
+
     def run_sqlmap(self, menu=None):
         # PROMPT THE USER FOR SQLMAP OPTIONS AND EXECUTE THEM
         target = input("Enter the target URL (e.g 'http[s]://target[:port]/[path/]'): ")
-        technique = input("Enter the technique to use (e.g. -b for boolean-based blind, -t for time-based, etc.): ")
+        technique = input(
+            "Enter the technique to use (e.g. -b for boolean-based blind, -t for time-based, etc.): "
+        )
         dbms = input("Enter the DBMS (e.g. MySQL, PostgreSQL, etc.): ")
-        level = input("Enter the level of testing (1-5, where 1 is the least intrusive and 5 is the most intrusive): ")
-        risk = input("Enter the risk (1-3, where 1 is the least risky and 3 is the most risky): ")
+        level = input(
+            "Enter the level of testing (1-5, where 1 is the least intrusive and 5 is the most intrusive): "
+        )
+        risk = input(
+            "Enter the risk (1-3, where 1 is the least risky and 3 is the most risky): "
+        )
         try:
             level = int(level)
             risk = int(risk)
@@ -358,7 +378,9 @@ class clitool:
 
         # CHANGE TO THE SQLMAP DIRECTORY
         os.chdir(os.path.join(self.base_path, "sqlmap"))
-        os.system(f"{self.python_command} sqlmap.py -u {target} {technique} -d {dbms} -l {level} -risk {risk}")
+        os.system(
+            f"{self.python_command} sqlmap.py -u {target} {technique} -d {dbms} -l {level} -risk {risk}"
+        )
         input("Press any key to continue...")
         self.return_to_menu(menu)
 
@@ -370,22 +392,32 @@ class clitool:
         else:
             os.chdir(pagodo_path)
             domain = input("Enter the domain to search (e.g. example.com): ")
-            dorks_file = input("Enter the path to the dorks file (e.g. dorks/all_google_dorks.txt)\nYou can skip this if you don't have any dork file: ")
+            dorks_file = input(
+                "Enter the path to the dorks file (e.g. dorks/all_google_dorks.txt)\nYou can skip this if you don't have any dork file: "
+            )
             if not dorks_file:
                 dorks_file = "dorks/all_google_dorks.txt"
-            max_results = int(input("Enter the maximum number of results to return per dork (e.g. 10): "))
-            output_file = input("Enter the path to save the output JSON file (optional): ")
-            urls_file = input("Enter the path to save the URLs to a text file (optional): ")
-            
+            max_results = int(
+                input(
+                    "Enter the maximum number of results to return per dork (e.g. 10): "
+                )
+            )
+            output_file = input(
+                "Enter the path to save the output JSON file (optional): "
+            )
+            urls_file = input(
+                "Enter the path to save the URLs to a text file (optional): "
+            )
+
             command = f"{self.python_command} pagodo.py -d {domain} -g {dorks_file} -m {max_results}"
             if output_file:
                 command += f" -o {output_file}"
             if urls_file:
                 command += f" -s {urls_file}"
-            
+
             os.system(command)
             input("Press any key to continue...\n")
-    
+
     # IMPORTANT! EMAILALL IS SHOWING ERRORS WHILE RUNNING BUT IT SOMEHOW WORKS...
     # NEED TO FIX THIS LATER... maybe.
     def run_EmailAll(self):
@@ -410,19 +442,21 @@ class clitool:
                 os.system("py -m pip install lxml")
             domain = input("Enter the domain to search (e.g. example.com): ")
             command = f"{self.python_command} emailall.py --domain {domain} run"
-            process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            process = subprocess.Popen(
+                command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+            )
             while process.poll() is None:
                 quit_command = input("Enter 'q' to quit the program: ")
-                if quit_command.lower() == 'q':
+                if quit_command.lower() == "q":
                     process.terminate()
                     break
             os.system(command)
             input("Press any key to continue...\n")
             self.return_to_menu(self.menu)
-            
+
     # THIS FUNCTION IS SPECIAL BECAUSE IT'S SUPPOSED TO WORK EVEN WITHOUT A GITHUB REPO.
     def run_MAC_changer(self):
-        os.system("cls")
+        os.system("clear")
         banner.test()
         network_type = int(input("Network Type (1 for Ethernet, 2 for Wi-Fi): "))
         if network_type == 1:
@@ -431,17 +465,20 @@ class clitool:
             connection = "Wi-Fi"
         else:
             print("Invalid network type. Please select 1 or 2.")
-            
+
         new_mac = input("Change the MAC address to (format: XX-XX-XX-XX-XX-XX): ")
-            
+
         print("[+] Changing the MAC address to " + new_mac)
         os.system("netsh interface set interface " + connection + " admin=disable")
         os.system("netsh interface set interface " + connection + " admin=enable")
-        os.system("netsh interface set interface " + connection + " newmac=" + new_mac.replace(":", "-"))
+        os.system(
+            "netsh interface set interface "
+            + connection
+            + " newmac="
+            + new_mac.replace(":", "-")
+        )
         os.system("netsh interface show interface " + connection)
-            
-                
-    
+
     def run_calculator(self):
         calculator_path = os.path.join(self.base_path, "calculator")
         if not os.path.exists(calculator_path):
@@ -449,12 +486,12 @@ class clitool:
             self.install_calculator(self.calculation_menu)
         else:
             os.chdir(calculator_path)
-            os.system("cls")
+            os.system("clear")
             banner.test()
             os.system(f"{self.python_command} script.py")
             input("Press any key to continue...")
             self.return_to_menu(self.calculation_menu)
-    
+
     def run_IMC(self):
         IMC_path = os.path.join(self.base_path, "IMC")
         if not os.path.exists(IMC_path):
@@ -462,12 +499,12 @@ class clitool:
             self.install_IMC(self.calculation_menu)
         else:
             os.chdir(IMC_path)
-            os.system("cls")
+            os.system("clear")
             banner.test()
             os.system(f"{self.python_command} script.py")
             input("Press any key to continue...")
             self.return_to_menu(self.calculation_menu)
-    
+
     def run_watch(self):
         watch_path = os.path.join(self.base_path, "watch")
         if not os.path.exists(watch_path):
@@ -475,20 +512,22 @@ class clitool:
             self.install_watch(self.calculation_menu)
         else:
             os.chdir(watch_path)
-            os.system("cls")
+            os.system("clear")
             banner.test()
             os.system(f"{self.python_command} script.py")
             input("Press any key to continue...")
-            self.return_to_menu(self.calculation_menu)       
-        
+            self.return_to_menu(self.calculation_menu)
+
     def run_MAC_changer(self):
         MAC_changer_path = os.path.join(self.base_path, "MAC_changer")
         if not os.path.exists(MAC_changer_path):
-            print("===== MAC_changer is not installed. Please install it first... =====")
+            print(
+                "===== MAC_changer is not installed. Please install it first... ====="
+            )
             self.install_MAC_changer(self.calculation_menu)
         else:
             os.chdir(MAC_changer_path)
-            os.system("cls")
+            os.system("clear")
             banner.test()
             os.system(f"{self.python_command} MAC_windows.py")
             input("Press any key to continue...")
@@ -501,12 +540,12 @@ class clitool:
             self.install_QRcode(self.calculation_menu)
         else:
             os.chdir(QRcode_path)
-            os.system("cls")
+            os.system("clear")
             banner.test()
             os.system(f"{self.python_command} script.py")
             input("Press any key to continue...")
-            self.return_to_menu(self.calculation_menu)    
-    
+            self.return_to_menu(self.calculation_menu)
+
     def run_barcode(self):
         barcode_path = os.path.join(self.base_path, "barcode")
         if not os.path.exists(barcode_path):
@@ -514,14 +553,14 @@ class clitool:
             self.install_barcode(self.calculation_menu)
         else:
             os.chdir(barcode_path)
-            os.system("cls")
+            os.system("clear")
             banner.test()
             os.system(f"{self.python_command} script.py")
             input("Press any key to continue...")
-            self.return_to_menu(self.calculation_menu)    
-            
-# HERE ARE THE SETTINGS FUNCTIONS
-    def change_default_directory(self): # NEED FIXING
+            self.return_to_menu(self.calculation_menu)
+
+    # HERE ARE THE SETTINGS FUNCTIONS
+    def change_default_directory(self):  # NEED FIXING
         new_dir = input("Enter the new defaullt directory: ")
         if os.path.exists(new_dir) and os.path.isdir(new_dir):
             self.base_path = new.dir
@@ -533,8 +572,8 @@ class clitool:
             print("The directory you entered does not exist or is not a directory.")
             input("Press any key to continue...")
             self.return_to_menu(self.menu)
-    
-    def display_MAC_address(self): # NEED FIXING
+
+    def display_MAC_address(self):  # NEED FIXING
         network_type = int(input("Network Type (1 for Ethernet, 2 for Wi-Fi): "))
         if network_type == 1:
             connection = "Ethernet"
@@ -545,37 +584,50 @@ class clitool:
             return
 
         if connection == "Ethernet":
-            mac_address = subprocess.check_output(["getmac", "/v", connection]).decode().split("\n")[1].split()[-1]
+            mac_address = (
+                subprocess.check_output(["getmac", "/v", connection])
+                .decode()
+                .split("\n")[1]
+                .split()[-1]
+            )
         else:
-            output = subprocess.check_output(["netsh", "interface", "show", "interface"]).decode()
+            output = subprocess.check_output(
+                ["netsh", "interface", "show", "interface"]
+            ).decode()
             if "Wi-Fi" in output:
-                mac_address = output.split("Wi-Fi")[1].split("\n")[1].split(":")[1].strip()
+                mac_address = (
+                    output.split("Wi-Fi")[1].split("\n")[1].split(":")[1].strip()
+                )
             else:
                 print("Wi-Fi interface not found.")
                 return
 
         print("The MAC address of", connection, "is", mac_address)
-        
-# HERE WE DISPLAY THE UTILITY TOOLS MENU
+
+    # HERE WE DISPLAY THE UTILITY TOOLS MENU
     def utility_menu(self):
         print("These are the utility tools available")
         time.sleep(1)
         print("01) QRcode - Generate a QR code")
         print("02) barcode - Generate a barcode")
-        
+        print("00) Return to menu.")
+
         tool_opt = input("Select a tool to install or run>> ")
-        
+
         if tool_opt == "1" or tool_opt == "01" or tool_opt == "QRcode":
             self.install_QRcode(self.utility_menu)
-        
+
         elif tool_opt == "2" or tool_opt == "02" or tool_opt == "barcode":
             self.install_barcode(self.utility_menu)
-            
+
+        elif tool_opt == "0" or tool_opt == "00" or tool_opt == "exit":
+            self.return_to_menu(self.menu)
+
         else:
             print("\nPlease select a valid input, returning now.")
             self.return_to_menu(self.menu)
 
-# HERE WE DISPLAY THE PENTESTING MENU AND THE TOOLS    
+    # HERE WE DISPLAY THE PENTESTING MENU AND THE TOOLS
     def pentest_menu(self):
         print("These are the available tools in this CLI:\n")
         time.sleep(1)
@@ -584,30 +636,39 @@ class clitool:
         print("03) EmailAll - Advanced email collection tool")
         print("04) MAC_changer - Change your MAC address")
         print("00) Return to menu.")
-    
+
         tool_opt = input("Select a tool to install or run>> ")
-    
+
         if tool_opt == "1" or tool_opt == "01" or tool_opt == "sqlmap":
             self.install_sqlmap(self.pentest_menu)
-        
-        elif tool_opt == "2" or tool_opt == "02" or tool_opt  == "pagodo":
+
+        elif tool_opt == "2" or tool_opt == "02" or tool_opt == "pagodo":
             self.install_pagodo(self.pentest_menu)
-        
-        elif tool_opt == "3" or tool_opt == "03" or tool_opt == "EmailAll" or tool_opt == "emailall":
+
+        elif (
+            tool_opt == "3"
+            or tool_opt == "03"
+            or tool_opt == "EmailAll"
+            or tool_opt == "emailall"
+        ):
             self.install_EmailAll(self.pentest_menu)
-            
-        elif tool_opt == "4" or tool_opt == "04" or tool_opt == "MAC_changer" or tool_opt == "mac_changer":
+
+        elif (
+            tool_opt == "4"
+            or tool_opt == "04"
+            or tool_opt == "MAC_changer"
+            or tool_opt == "mac_changer"
+        ):
             self.run_MAC_changer()
-        
 
         if tool_opt == "00" or tool_opt == "0" or tool_opt == "back":
             self.return_to_menu(self.menu)
-            
+
         else:
             print("\nPlease select a valid input, returning now.\n")
             self.return_to_menu(self.menu)
 
-# HERE WE DISPLAY THE MULTIPLE CALCULATION FUNCTIONS
+    # HERE WE DISPLAY THE MULTIPLE CALCULATION FUNCTIONS
     def calculation_menu(self):
         print("These are the available tools:\n")
         time.sleep(1)
@@ -615,59 +676,58 @@ class clitool:
         print("02) IMC - IMC calculator")
         print("03) watch - It gives time...")
         print("00) Return to menu")
-        
+
         tool_opt = input("Select a tool to install or run>> ")
-        
+
         if tool_opt == "01" or tool_opt == "1" or tool_opt.lower() == "calculator":
             self.install_calculator(self.calculation_menu)
-            
+
         elif tool_opt == "02" or tool_opt == "2" or tool_opt.lower() == "imc":
             self.install_IMC(self.calculation_menu)
-            
+
         elif tool_opt == "03" or tool_opt == "3" or tool_opt.lower() == "watch":
             self.install_watch(self.calculation_menu)
-        
+
         elif tool_opt == "00" or "0" or "back":
             self.return_to_menu(self.calculation_menu)
-        
+
         else:
             print("\nPlease select a valid input, returning now.\n")
             self.return_to_menu()
             self.calculation_menu()
-        
-# HERE WE DISPLAY THE SETTINGS MENU
-# MOST OF THESE FUNCTIONS ARE BROKEN! SO DEAL WITH THEM CAREFULLY
+
+    # HERE WE DISPLAY THE SETTINGS MENU
+    # MOST OF THESE FUNCTIONS ARE BROKEN! SO DEAL WITH THEM CAREFULLY
     def settings_menu(self):
         print("These are the available settings:\n")
         time.sleep(1)
         print("01) Change the default directory")
         print("02) Display MAC address")
         print("00) Return to menu.")
-        
+
         tool_opt = input("Please select an option\n>> ")
-        
+
         if tool_opt == "01" or tool_opt == "1":
-            #self.change_default_directory()
+            # self.change_default_directory()
             print("This is a work in progress!")
             time.sleep(2)
             self.return_to_menu(self.menu)
-        
+
         elif tool_opt == "02" or tool_opt == "2":
             print("This is a work in progress!")
             time.sleep(2)
             self.return_to_menu(self.menu)
-            #self.display_MAC_address()
-        
+            # self.display_MAC_address()
+
         elif tool_opt == "00" or tool_opt == "0":
             self.menu()
-        
+
         else:
             print("\nPlease select a valid input, returning now.\n")
             self.menu()
-            
-# THIS IS THE MAIN MENU
 
-            
+    # THIS IS THE MAIN MENU
+
     def menu(self):
         print("These are the following functions:\n")
         time.sleep(1)
@@ -676,39 +736,39 @@ class clitool:
         print("03) Utility menu.")
         print("99) Settings.")
         print("00) Exit CLItool")
-        
+
         menu_opt = input("Select a menu to continue>> ")
-        
+
         if menu_opt == "1" or menu_opt == "01" or menu_opt == "pentesting":
-            os.system("cls")
+            os.system("clear")
             banner.test()
             self.pentest_menu()
-            
+
         elif menu_opt == "2" or menu_opt == "02" or menu_opt == "calculation":
-            os.system('cls')
+            os.system("clear")
             banner.test()
             self.calculation_menu()
-        
+
         elif menu_opt == "3" or menu_opt == "03" or menu_opt == "utility":
-            os.system("cls")
+            os.system("clear")
             banner.test()
             self.utility_menu()
-            
+
         elif menu_opt == "99" or menu_opt == "settings":
-            os.system("cls")
+            os.system("clear")
             banner.test()
             self.settings_menu()
-        
+
         elif menu_opt == "0" or menu_opt == "00" or menu_opt == "exit":
             sys.exit()
-        
+
         else:
             print("\nPlease select a valid input, returning now.\n")
             self.return_to_menu(self.menu)
             self.menu()
 
 
-os.system("cls")
+os.system("clear")
 banner.test()
 clitool = clitool()
 clitool.menu()
