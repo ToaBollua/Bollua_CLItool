@@ -19,8 +19,9 @@ it's on you to modify whatever you want!
 import os
 from tools import tools
 from tools_installer import ToolInstaller
-from main import get_python_command
-from main import return_to_menu
+from main import clitool, return_to_menu
+
+python_command = clitool.get_python_command()
 
 def run_tool(base_path, python_command, tool_name, menu=None):
     tool_info = tools.get(tool_name)
@@ -54,9 +55,6 @@ def run_IMC(base_path, python_command, menu):
 
 def run_watch(base_path, python_command, menu):
     run_tool(base_path, python_command, "watch", menu)
-
-def run_MAC_changer(base_path, python_command, menu):
-    run_tool(base_path, python_command, "mac_changer", menu)
 
 def run_QRcode(base_path, python_command, menu):
     run_tool(base_path, python_command, "qrcode", menu)
