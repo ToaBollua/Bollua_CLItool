@@ -71,14 +71,6 @@ tools = {
         "install_cmd": "git clone -b {name} {url} {path}",
         "run_cmd": "python {path}/watch.py"
 },
-    "mac_changer": {
-        "name": "MAC_changer",
-        "description": "Change your MAC address",
-        "url": "https://github.com/EngineerRancho/MAC_changer.git",
-        "path": "mac_changer",
-        "install_cmd": "git clone {url} {path}",
-        "run_cmd": "python {path}/mac_changer.py"
-},
     "qrcode": {
         "name": "QRcode",
         "description": "QRcode generator",
