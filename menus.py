@@ -95,9 +95,9 @@ class Menu:
 
         if tool_opt in ["00", "0", "back"]:
             self.return_to_menu(self.main_menu)
-        elif tool_opt.isdigit() and 1 <= int(tool_opt) <= len(tools[category]):
+        elif tool_opt.isdigit() and 1 <= int(tool_opt) <= len(list(tools[category].keys())):
             tool_key = list(tools[category].keys())[int(tool_opt) - 1]
-            self.tool_installer.install_tool(category, tool_key)
+            self.tool_installer.install_tool(category, tool_key, menu)
             run_tool(self.base_path, self.python_command, category, tool_key)
         else:
             print("\nPlease select a valid input, returning now.\n")
