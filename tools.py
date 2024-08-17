@@ -13,6 +13,8 @@ It contains all the tools that are used in the program.
 You can expand or modify the tools just by
 adding or modifying the functions in this file.
 
+Might implement some built-in tools.
+
 Happy hacking!
 ~ Bollua
 
