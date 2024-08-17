@@ -19,10 +19,24 @@ projects if you want ;)
 
 """
 
-
+import os
 import shutil
+import banner
 
+def get_package_manager():
+    
+    # Probably need a way to fetch or get the various
+    # package managers for different operating systems
+    # For now, just use the ones in
+    # ./tools_installer.py
+        
+    pass
 
+def get_clear_command():
+    if shutil.which("cls") is not None:
+        return "cls"
+    elif shutil.which("clear") is not None:
+        return "clear"
 
 def get_python_command():
     if shutil.which("py") is not None:
@@ -38,6 +52,8 @@ def get_python_command():
 
 def return_to_menu(menu):
     input("Press Enter to return to the menu...")
+    os.system(get_clear_command())
+    banner.test()
     menu()
 
 
