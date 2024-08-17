@@ -38,7 +38,6 @@ class ToolInstaller:
 
     def install_tool(self, tool_key, category, menu):
         """Installs a tool by name and category"""
-        print(f"Installing tool {tool_key} in category {category}")
         tool_info = get_tool_info(tool_key, category)
         print(f"Tool info: {tool_info}")
         if tool_info is None:
