@@ -57,3 +57,11 @@ def return_to_menu(menu):
     menu()
 
 
+    """
+=====================================================
+/                                                   /
+/ Docstring example for reusability in further      /
+/ development.                                      /
+/                                                   /
+=====================================================
+    """
