@@ -54,6 +54,30 @@ class CLItool:
         self.python_command = utils.get_python_command()
         self.menu = menus.Menu(self.base_path, self.python_command)
 
+    """
+                 @@@@@                 
+                @@@@@@@                
+              @@@@@@@@@@@              
+            @   @@@@@@@@@@@            
+          @@@@@   @@@@@@@@@@@          
+        @@@@@@@@@     @@@@@@@@@        
+      @@@@@@@@@@@     @@@@@@@@@@@      
+    @@@@@@@@@@@@@@      @@@@@@@@@@@    
+   @@@@@@@@@@@@@@@@  @    @@@@@@@@@@   
+ @@@@@@@@@@@@@@@@@@  @@@      @@@@@@@@ 
+@@@@@@@@@@@@@@@@@@@  @@@@      @@@@@@@@
+ @@@@@@@@@@@@@@@@@@  @@@@     @@@@@@@@ 
+   @@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@   
+    @@@@@@@@@@@@@@@  @@@@@@@@@@@@@@    
+      @@@@@@@@@@@     @@@@@@@@@@@      
+        @@@@@@@@@     @@@@@@@@@        
+          @@@@@@@@@ @@@@@@@@@          
+            @@@@@@@@@@@@@@@            
+              @@@@@@@@@@@              Checking if git is installed and then executes a command
+                @@@@@@@                in the system's command prompt or terminal to install it.
+                 @@@@@                 
+    """   
+
     def check_git_installation(self):
         if shutil.which("git") is None:
             git_opt = input("git is not installed. Do you want to install git?\n(Y/N)>> ")
