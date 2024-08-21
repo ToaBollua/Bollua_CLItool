@@ -26,18 +26,28 @@ from tools import get_tool_info, get_all_tools
 class ToolInstaller:
     def __init__(self, base_path):
         """
-        Initializes the ToolInstaller with a base path.
-
-        Args:
-            base_path (str): The base path for the tools
-            will be installed. Defaults to the user's home directory.
-
+=====================================================
+/                                                   /
+/ Initializes the ToolInstaller with a base path.   /
+/ Args:                                             /
+/   base_path (str): The base path for the tools    /
+/   will be installed.                              /
+/   Defaults to the user's home directory.          /
+/                                                   /
+=====================================================
         """
+            
         self.base_path = base_path
         self.tools_dir = os.path.join(self.base_path, "tools")
 
     def install_tool(self, tool_key, category, menu):
-        """Installs a tool by name and category"""
+        """
+=====================================================
+/                                                   /
+/ Installs a tool by name and category              /
+/                                                   /
+=====================================================
+        """
         tool_info = get_tool_info(tool_key, category)
         print(f"Tool info: {tool_info}")
         if tool_info is None:
@@ -87,20 +97,38 @@ class ToolInstaller:
             print(f"===== Tool {tool_info['name']} not found in category {category} =====")
 
     def install_all_tools(self, category):
-        """Installs all tools in a category"""
+        """
+=====================================================
+/                                                   /
+/ Installs all tools in a category.                 /
+/                                                   /
+=====================================================
+        """
         tool_names = get_all_tools(category)
         for tool_key in tool_names:
             self.install_tool(tool_key, category)
 
     def list_tools(self, category):
-        """Lists all available tools in a category"""
+        """
+=====================================================
+/                                                   /
+/ Lists all available tools in a category.          /
+/                                                   /
+=====================================================
+        """
         tool_names = get_all_tools(category)
         print(f"Available tools in category {category}:")
         for tool_key in tool_names:
             print(tool_key)
 
     def list_installed_tools(self, category):
-        """Lists all installed tools in a category"""
+        """
+=====================================================
+/                                                   /
+/ Lists all installed tools in a category.          /
+/                                                   /
+=====================================================
+        """
         tool_names = get_all_tools(category)
         print(f"Installed tools in category {category}:")
         for tool_key in tool_names:
@@ -110,7 +138,13 @@ class ToolInstaller:
                 print(tool_key)
 
     def uninstall_tool(self, tool_key, category):
-        """Uninstalls a tool by name and category"""
+        """
+=====================================================
+/                                                   /
+/ Uninstalls a tool by name and category.           /
+/                                                   /
+=====================================================
+        """
         tool_info = get_tool_info(tool_key, category)
         if tool_info:
             tool_path = os.path.join(self.base_path, tool_info["path"])
@@ -125,3 +159,5 @@ class ToolInstaller:
                 print(f"===== {tool_key} is not installed =====")
         else:
             print(f"===== Tool {tool_key} not found in category {category} =====")
+
+            
