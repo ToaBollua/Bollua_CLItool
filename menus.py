@@ -61,15 +61,44 @@ class Menu:
             print("Invalid option, please try again.")
             self.main_menu()
     
+    """
+=====================================================
+/                                                   /
+/ Return to menu function, pretty self explanatory.
+/ It... returns you to the lower menu.
+/                                                   /
+=====================================================
+    """
+    
     def return_to_menu(self, menu):
         os.system("clear")
         banner.test()
         menu()
 
+    """
+=====================================================
+/                                                   /
+/ Method that handles the category display. It      /
+/ takes the logic of handle_tol_selection and       /    
+/ display_tools and  puts it into a function.       /
+/ Making it easier to read... somehow               /
+/                                                   /
+=====================================================
+    """
     def display_tools_and_handle_selection(self, category, menu):
         self.display_tools(category)
         self.handle_tool_selection(category, menu)
 
+    """
+=====================================================
+/                                                   /
+/ The *_menu() functions displays the menus.        /
+/ you may create more if you need more categories   /
+/ But you would have to add them also in the        /
+/ tools.py dictionary.                              /
+/                                                   /
+=====================================================
+    """
     def pentest_menu(self):
         self.display_tools_and_handle_selection("pentest", self.pentest_menu)
 
