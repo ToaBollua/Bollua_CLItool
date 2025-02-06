@@ -25,15 +25,34 @@ if cli_tool_dir not in path:
     os.environ["PATH"] = cli_tool_dir + os.pathsep + path
     
 
-# HERE GOES THE TOOLS GITHUB LINK
+# HERE GOES THE TOOLS GITHUB LINKS
 class clitool:
     def __init__(self):
+#      ______  ___ _____ _   _ 
+#      | ___ \/ _ \_   _| | | |
+#      | |_/ / /_\ \| | | |_| |
+#      |  __/|  _  || | |  _  |
+#      | |   | | | || | | | | |
+#      \_|   \_| |_/\_/ \_| |_/                        
+# 
+#       HERE WE DEFINE THE PATH AND TELL THE PROGRAM
+#       TO USE THE USER'S HOME DIRECTORY 
+#       TRY NOT TO TOUCH THIS PART
+#       UNLESS YOU KNOW WHAT YOU'RE DOING OFC!
+
         if sys.platform == "win32":
             self.base_path = os.path.join(os.getenv("USERPROFILE"), "CLItool")
         else:
             self.base_path = os.path.join(os.getenv("HOME"), ".CLItool")
         if not os.path.exists(self.base_path):
             os.makedirs(self.base_path)
+
+#       NOW THIS SECTION IS FOR SPECIFYING EACH TOOL DIRECTORY NAME
+#       THIS CAN BE OPTIMIZED (PRETTY MUCH LIKE THE WHOLE SCRIPT)
+#       BUT I DO NOT RECOMMEND MESSING WITH THIS BLOCK OF CODE
+#       FEEL FREE TO ADD YOUR OWN TOOLS HERE THO, MAKE SURE TO
+#       USE THE SAME SYNTAX AS THE BLOCK BELOW!!!
+
         self.sqlmap_path = os.path.join(self.base_path, "sqlmap")
         self.pagodo_path = os.path.join(self.base_path, "pagodo")
         self.EmailAll_path = os.path.join(self.base_path, "EmailAll")
@@ -44,7 +63,12 @@ class clitool:
         self.QRcode_path = os.path.join(self.base_path, "QRcode")
         self.barcode_path = os.path.join(self.base_path, "barcode")
         
-        # TOOLS GITHUB DOWNLOAD URL SO WE CAN CALL THEM LATER
+#       TOOLS GITHUB DOWNLOAD URL SO WE CAN CALL THEM LATER
+#       PRETTY MUCH THE SAME AS ABOVE HERE, I DO NOT RECOMMEND
+#       CHANGING HOW THIS WORKS UNLESS YOU KNOW WHAT YOU'RE DOING
+#       BUT YOU MUST ADD THE GIT REPOSITORY'S LINK HERE, DEFINING
+#       IT AS YOUR TOOL'S URL, AS SHOWN BELOW
+
         self.sqlmap_url = 'https://github.com/sqlmapproject/sqlmap.git'
         self.pagodo_url = 'https://github.com/opsdisk/pagodo.git'
         self.EmailAll_url = 'https://github.com/Taonn/EmailAll.git'
@@ -55,10 +79,25 @@ class clitool:
         self.QRcode_url = 'https://github.com/ToaBollua/tools4toolkit.git'
         self.barcode_url = 'https://github.com/ToaBollua/tools4toolkit.git'
         
-        #THIS SETS YOUR DEFAULT PYTHON COMMAND AFTER CHECKING
+#       THIS SETS YOUR DEFAULT PYTHON COMMAND AFTER CHECKING
+#       DO NOT DELETE ;)
+
         self.python_command = self.get_python_command()
        
-        #CHECK IF REQUIREMENTS ARE MET
+#        _____ _____ _____ 
+#       |  __ \_   _|_   _|
+#       | |  \/ | |   | |  
+#       | | __  | |   | |  
+#       | |_\ \_| |_  | |  
+#        \____/\___/  \_/  
+#
+#       CHECK IF REQUIREMENTS ARE MET
+#       THE GIT CHECKING SEQUENCE OF CODE
+#       DOES NOT WORK AS INTENDED, FEEL FREE
+#       TO TRY AND FIX IT IF YOU WANT
+#       YOU CAN ADD OTHER PACKAGE MANAGERS
+#       OR OTHER STUFF FOR IT
+
         if shutil.which('git') is None:
             self.git_opt = input("git is not installed. Do you want to install git?\n(Y/N)>> ")
             if self.git_opt == "Y" or self.git_opt == "y":
@@ -79,7 +118,8 @@ class clitool:
                 os.system("cls")
                 banner.test()
                 return
-    # THIS CHECKS WHICH PYTHON COMMAND IS USED IN THE USER'S MACHINE AND USES THAT TO OPEN OTHER PYTHON FILES
+
+# THIS CHECKS WHICH PYTHON COMMAND IS USED IN THE USER'S MACHINE AND USES THAT TO OPEN OTHER PYTHON FILES
     def get_python_command(self):
         if shutil.which('py') is not None:
             return "py"
@@ -91,18 +131,52 @@ class clitool:
             print("Python is not installed. Please install python and try again.\n===== RECOMMENDED VERSION 3.11.8 =====")
     
             
-    # ADDS REQUIREMENTS TO THE SYSTEM'S PATH ENVIROMENT VARIABLE
+#       ADDS REQUIREMENTS TO THE SYSTEM'S PATH ENVIROMENT VARIABLE
+#       I AM HONESTLY NOT SURE IF THIS BLOCK OF CODE IS USEFUL OR NOT
+#       IT'S SUPPOSED TO ADD GIT TO THE ENVIROMENT VARIABLE IF IT'S NOT
+#       INSTALLED, BUT APPARENTLY ONLY WORKS ON LINUX.
+#       REVIEW LATER!!!
+
         if 'git' not in os.environ['PATH']:
             os.environ['PATH'] += os.pathsep + '/usr/bin'
-    
+
+#   ALMOST THE SAME AS THE GET PYTHON COMMAND BUT FOR CLEANING
+#   THE USER'S SCREEN FOR DIFFERENT OS
+
+    def get_clean_screen(self):
+        if shutil.which('cls') is not None:
+            return "cls"
+        elif shutil.which('clear') is not None:
+            return "clear"
+        else:
+            print("Clean screen command not found. Please check 'get_clean_screen' function.")
+            return
+
+#   PERSONALLY MY FAVOURITE FUNCTION OF THIS WHOLE
+#   SCRIPT! IS SO SIMPLE YET SO USEFUL!
+#   BUT YEAH... IT JUST RETURNS THE USER TO THE MENU
+
     def return_to_menu(self, menu):
         print("Returning to main menu...")
-        os.system("cls")
+        os.system(self.get_clean_screen())
         time.sleep(1)
         banner.test()
         self.menu()
 
-    # HERE WE INSTALL THE TOOLS
+#   ▪   ▐ ▄ .▄▄ · ▄▄▄▄▄ ▄▄▄· ▄▄▌  ▄▄▌  ▄▄▄ .▄▄▄  .▄▄ · 
+#   ██ •█▌▐█▐█ ▀. •██  ▐█ ▀█ ██•  ██•  ▀▄.▀·▀▄ █·▐█ ▀. 
+#   ▐█·▐█▐▐▌▄▀▀▀█▄ ▐█.▪▄█▀▀█ ██▪  ██▪  ▐▀▀▪▄▐▀▀▄ ▄▀▀▀█▄
+#   ▐█▌██▐█▌▐█▄▪▐█ ▐█▌·▐█ ▪▐▌▐█▌▐▌▐█▌▐▌▐█▄▄▌▐█•█▌▐█▄▪▐█
+#   ▀▀▀▀▀ █▪ ▀▀▀▀  ▀▀▀  ▀  ▀ .▀▀▀ .▀▀▀  ▀▀▀ .▀  ▀ ▀▀▀▀ 
+#   
+#   HERE ARE ALL THE INSTALLATION FUNCTIONS
+#   FOR EVERY TOOL IN THE PROGRAM!!!
+#   I KNOW THIS METHOD OF WRITING THE FUNCTIONS
+#   IS REPETITIVE, HARD TO READ AND ALL
+#   I'M WORKING ON IT ON SEPARATE BRANCHES
+#   FEEL FREE TO TRY AND IMPLEMENT A SOLUTION
+#   BY YOURSELF!
+#   IF YOU DARE c:<
         
     def install_sqlmap(self, menu):
         sqlmap_path = os.path.join(self.base_path, "sqlmap")
@@ -340,7 +414,20 @@ class clitool:
             else:
                 self.return_to_menu(menu)
 
-# HERE WE RUN THE TOOLS
+#   ▄▄▄  ▄• ▄▌ ▐ ▄  ▐ ▄ ▄▄▄ .▄▄▄  .▄▄ · 
+#   ▀▄ █·█▪██▌•█▌▐█•█▌▐█▀▄.▀·▀▄ █·▐█ ▀. 
+#   ▐▀▀▄ █▌▐█▌▐█▐▐▌▐█▐▐▌▐▀▀▪▄▐▀▀▄ ▄▀▀▀█▄
+#   ▐█•█▌▐█▄█▌██▐█▌██▐█▌▐█▄▄▌▐█•█▌▐█▄▪▐█
+#   .▀  ▀ ▀▀▀ ▀▀ █▪▀▀ █▪ ▀▀▀ .▀  ▀ ▀▀▀▀ 
+#   HERE LAY ALL THE RESPECTIVE
+#   RUN FUNCTIONS FOR EVERY TOOL
+#   MOST RUN FUNCTIONS ARE UNIQUE TO
+#   IT'S TOOL, SINCE THE IDEA OF THE
+#   TOOLKIT IS TO ABSTRACT THE NEED
+#   OF FLAG USAGE AND TURN IT INTO
+#   A MENU WITH OPTIONS FOR COMMON
+#   USE OR, IDEALLY, ALL THE TOOL'S
+#   FUNCTIONS
     
     def run_sqlmap(self, menu=None):
         # PROMPT THE USER FOR SQLMAP OPTIONS AND EXECUTE THEM
@@ -555,8 +642,23 @@ class clitool:
                 return
 
         print("The MAC address of", connection, "is", mac_address)
-        
-# HERE WE DISPLAY THE UTILITY TOOLS MENU
+
+#    • ▌ ▄ ·. ▄▄▄ . ▐ ▄ ▄• ▄▌.▄▄ · 
+#   ·██ ▐███▪▀▄.▀·•█▌▐██▪██▌▐█ ▀. 
+#   ▐█ ▌▐▌▐█·▐▀▀▪▄▐█▐▐▌█▌▐█▌▄▀▀▀█▄
+#   ██ ██▌▐█▌▐█▄▄▌██▐█▌▐█▄█▌▐█▄▪▐█
+#   ▀▀  █▪▀▀▀ ▀▀▀ ▀▀ █▪ ▀▀▀  ▀▀▀▀        
+#   FROM HERE YOU WILL FIND THE MUTIPLE
+#   MENUS AVAILABLE FOR THE TOOLKIT!
+#   FEEL FREE TO ADD MORE MENUS AS YOU NEED
+#   TO. JUST REMEMBER TO ADD THEM TO THE
+#   MAIN MENU!!!
+
+
+#   THIS IS THE UTILITY MENU
+#   USED FOR UTILITY TOOLS
+#   LIKE CALCULATORS, GRAPHIC TOOLS
+#   AND OTHER MISCELLANEOUS SCRIPTS
     def utility_menu(self):
         print("These are the utility tools available")
         time.sleep(1)
@@ -575,7 +677,7 @@ class clitool:
             print("\nPlease select a valid input, returning now.")
             self.return_to_menu(self.menu)
 
-# HERE WE DISPLAY THE PENTESTING MENU AND THE TOOLS    
+#   HERE WE DISPLAY THE PENTESTING MENU AND THE TOOLS    
     def pentest_menu(self):
         print("These are the available tools in this CLI:\n")
         time.sleep(1)
@@ -607,7 +709,7 @@ class clitool:
             print("\nPlease select a valid input, returning now.\n")
             self.return_to_menu(self.menu)
 
-# HERE WE DISPLAY THE MULTIPLE CALCULATION FUNCTIONS
+#   HERE WE DISPLAY THE MULTIPLE CALCULATION FUNCTIONS
     def calculation_menu(self):
         print("These are the available tools:\n")
         time.sleep(1)
@@ -635,8 +737,8 @@ class clitool:
             self.return_to_menu()
             self.calculation_menu()
         
-# HERE WE DISPLAY THE SETTINGS MENU
-# MOST OF THESE FUNCTIONS ARE BROKEN! SO DEAL WITH THEM CAREFULLY
+#   HERE WE DISPLAY THE SETTINGS MENU
+#   MOST OF THESE FUNCTIONS ARE BROKEN! SO DEAL WITH THEM CAREFULLY
     def settings_menu(self):
         print("These are the available settings:\n")
         time.sleep(1)
@@ -680,22 +782,22 @@ class clitool:
         menu_opt = input("Select a menu to continue>> ")
         
         if menu_opt == "1" or menu_opt == "01" or menu_opt == "pentesting":
-            os.system("cls")
+            os.system(self.get_clean_screen())
             banner.test()
             self.pentest_menu()
             
         elif menu_opt == "2" or menu_opt == "02" or menu_opt == "calculation":
-            os.system('cls')
+            os.system(self.get_clean_screen())
             banner.test()
             self.calculation_menu()
         
         elif menu_opt == "3" or menu_opt == "03" or menu_opt == "utility":
-            os.system("cls")
+            os.system(self.get_clean_screen())
             banner.test()
             self.utility_menu()
             
         elif menu_opt == "99" or menu_opt == "settings":
-            os.system("cls")
+            os.system(self.get_clean_screen())
             banner.test()
             self.settings_menu()
         
@@ -708,7 +810,7 @@ class clitool:
             self.menu()
 
 
-os.system("cls")
+os.system(clitool.get_clean_screen(clitool))
 banner.test()
 clitool = clitool()
 clitool.menu()
