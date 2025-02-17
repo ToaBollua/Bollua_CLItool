@@ -1,8 +1,11 @@
 # THIS IS A TEST! SO TREAT THE PROGRAM AS SUCH.
 # EDUCATIONAL PURPOSES ONLY! I WILL NOT BE RESPONSIBLE FOR ANY MISUSE OF THIS CODE.
+# WELCOME TO YOUR WORST NIGHTMARE OF A TOOLKIT!
+
 
 __author__ = "Bollua"
-__python_version__ = "3.11.8"
+__python_version__ = "3.13.1" #Python version used for writing the script
+                              #I recommend this version and above for the usage of the program
 
 # IMPORTS SCRIPT'S DEPENDENCIES
 try:
@@ -761,14 +764,14 @@ class clitool:
             #self.display_MAC_address()
         
         elif tool_opt == "00" or tool_opt == "0":
-            self.menu()
+            self.retunr_to_menu(self.menu())
         
         else:
             print("\nPlease select a valid input, returning now.\n")
-            self.menu()
+            self.return_to_menu(self.menu())
+            self.settings_menu()
             
 # THIS IS THE MAIN MENU
-
             
     def menu(self):
         print("These are the following functions:\n")
