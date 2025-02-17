@@ -65,6 +65,7 @@ class clitool:
         self.MAC_changer_path = os.path.join(self.base_path, "MAC_changer")
         self.QRcode_path = os.path.join(self.base_path, "QRcode")
         self.barcode_path = os.path.join(self.base_path, "barcode")
+        self.DDoSRipper_path = os.path.join(self.base_path, "DDoSRipper")
         
 #       TOOLS GITHUB DOWNLOAD URL SO WE CAN CALL THEM LATER
 #       PRETTY MUCH THE SAME AS ABOVE HERE, I DO NOT RECOMMEND
@@ -81,6 +82,7 @@ class clitool:
         self.MAC_changer_url = 'https://github.com/EngineerRancho/MAC_changer.git'
         self.QRcode_url = 'https://github.com/ToaBollua/tools4toolkit.git'
         self.barcode_url = 'https://github.com/ToaBollua/tools4toolkit.git'
+        self.DDoSRipper_url = 'https://github.com/palahsu/DDoS-Ripper.git'
         
 #       THIS SETS YOUR DEFAULT PYTHON COMMAND AFTER CHECKING
 #       DO NOT DELETE ;)
@@ -118,7 +120,7 @@ class clitool:
             else:
                 print("Please insert a valid option! Exiting now. . .")
                 time.sleep(3)
-                os.system("cls")
+                os.system(get_clean_screen())
                 banner.test()
                 return
 
@@ -417,6 +419,29 @@ class clitool:
             else:
                 self.return_to_menu(menu)
 
+    def install_DDoSRipper(self, menu):
+        DDoSRipper_path = os.path.join(self.base_path, "DDoSRipper")
+        if os.path.exists(DDoSRipper_path):
+            print("===== DDoSRipper is already installed =====")
+            print("===== DDoSRipper is ready to use =====")
+            run_opt = input("Do you want to run DDoSRipper?\n(Y/N)\n>> ")
+            if run_opt.lower() == "y":
+                self.run_DDoSRipper()
+            else:
+                self.return_to_menu(menu)
+        else:
+            print("===== DDoSRipper is not installed =====")
+            print("===== Installing DDoSRipper... =====")
+            os.system(f"git clone {self.DDoSRipper_url} {DDoSRipper_path}")
+            print("===== DDoSRipper succesfully installed =====")
+            print("==== DDoSRipper is ready to use =====")
+            run_opt = input("Do you want to run DDoSRipper?\n(Y/N)\n>> ")
+            if run_opt.lower() == "y":
+                self.run_DDoSRipper()
+            else:
+                self.return_to_menu(menu)
+
+
 #   ▄▄▄  ▄• ▄▌ ▐ ▄  ▐ ▄ ▄▄▄ .▄▄▄  .▄▄ · 
 #   ▀▄ █·█▪██▌•█▌▐█•█▌▐█▀▄.▀·▀▄ █·▐█ ▀. 
 #   ▐▀▀▄ █▌▐█▌▐█▐▐▌▐█▐▐▌▐▀▀▪▄▐▀▀▄ ▄▀▀▀█▄
@@ -608,7 +633,22 @@ class clitool:
             banner.test()
             os.system(f"{self.python_command} script.py")
             input("Press any key to continue...")
-            self.return_to_menu(self.calculation_menu)    
+            self.return_to_menu(self.calculation_menu)
+
+    def run_DDoSRipper(self):
+        DDoSRipper_path = os.path.join(self.base_path, "DDoSRipper")
+        if not os.path.exists(DDoSRipper_path):
+            print("===== DDoSRipper is not installed. Please install it first... =====")
+            self.install_DDoSRipper(self.pentest_menu)
+        else:
+            os.chdir(DDoSRipper_path)
+            os.system(self.get_clean_screen())
+            banner.test()
+            target = input("Please write the target host (IP or URL)\n>> ")
+            port = input("Please select port (Default is 22)\n>> ")
+            turbo = input("Please select turbo value (Default is 350)\n>> ")
+            os.system(f"{self.python_command} DRipper.py -s {target} -p {port} -t {turbo}")
+            self.return_to_menu(self.menu)
             
 # HERE ARE THE SETTINGS FUNCTIONS
     def change_default_directory(self): # NEED FIXING
@@ -688,6 +728,7 @@ class clitool:
         print("02) pagodo - Google-based web vulnerability scanner")
         print("03) EmailAll - Advanced email collection tool")
         print("04) MAC_changer - Change your MAC address")
+        print("05) DDoSRipper - DDoS tool (Please make sure you are anon first)")
         print("00) Return to menu.")
     
         tool_opt = input("Select a tool to install or run>> ")
@@ -703,6 +744,9 @@ class clitool:
             
         elif tool_opt == "4" or tool_opt == "04" or tool_opt == "MAC_changer" or tool_opt == "mac_changer":
             self.run_MAC_changer()
+
+        elif tool_opt == "5" or tool_opt == "05" or tool_opt == "DDoSRipper" or tool_opt == "ddosripper":
+              self.run_DDoSRipper()
         
 
         if tool_opt == "00" or tool_opt == "0" or tool_opt == "back":
