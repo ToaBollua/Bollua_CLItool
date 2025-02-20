@@ -6,7 +6,7 @@ CLItool is a multipurpose, menu-driven tool that allows you to easily install an
 
 CLItool is inspired by other projects like Babymux, but it runs the programs it installs by itself, without the need for the user to manually run them.
 
-CLItool is currently made for PowerShell, but I may create a bash version in the future.
+CLItool Multi-OS now since it runs on python and it's functions have been optimized for most OS
 
 I am open to any push requests, issues, or feedback you may have about this project. Please be respectful and constructive in your feedback.
 
