@@ -4,7 +4,7 @@
 
 
 __author__ = "Bollua"
-__python_version__ = "3.13.1" #Python version used for writing the script
+__python_version__ = "3.13.2" #Python version used for writing the script
                               #I recommend this version and above for the usage of the program
 
 # IMPORTS SCRIPT'S DEPENDENCIES
@@ -19,6 +19,8 @@ try:
 except Exception as e:
     logging.error(e)
 
+
+# TO BE BRUTALLY HONEST I DON'T REMEMBER WHAT THIS DOES
 script_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(script_path)
 home_dir = os.path.expanduser("~")
