@@ -110,7 +110,11 @@ class clitool:
             if self.git_opt == "Y" or self.git_opt == "y":
                 print("===== Installing git... =====\n")
                 if platform.system() == 'Windows':
-                    os.system('winget install --id Git.Git')
+		    try:
+                    	os.system('winget install Git.Git')
+			print("===== Git successfully installed! Please restart your terminal")
+		    except Error as e:
+			print("===== Git couldn't be installed, try installing it manually... =====")
                 elif platform.system() == 'Darwin':  # macOS
                     os.system('brew install git')
                 else:  # Linux
