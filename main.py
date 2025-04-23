@@ -160,8 +160,15 @@ class clitool:
         elif shutil.which('clear') is not None:
             return "clear"
         else:
-            print("Clean screen command not found. Please check 'get_clean_screen' function.")
-            return
+            screen_cleaner = input("Screen clean command not found. Please specify: \n1) cls\n2) clear\n>> ")
+            if screen_cleaner == "1":
+                return "cls"
+            elif screen_cleaner == "2":
+                return "clear"
+            else:
+                print("Please specify your clear command!!!")
+                time.sleep(3)
+                return
 
 #   PERSONALLY MY FAVOURITE FUNCTION OF THIS WHOLE
 #   SCRIPT! IS SO SIMPLE YET SO USEFUL!
