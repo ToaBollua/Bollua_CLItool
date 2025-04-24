@@ -1,7 +1,7 @@
 # THIS IS A TEST! SO TREAT THE PROGRAM AS SUCH.
 # EDUCATIONAL PURPOSES ONLY! I WILL NOT BE RESPONSIBLE FOR ANY MISUSE OF THIS CODE.
 # WELCOME TO YOUR WORST NIGHTMARE OF A TOOLKIT!
-
+#Hola Mundo, coman pene"
 
 __author__ = "Bollua"
 __python_version__ = "3.13.2" #Python version used for writing the script
